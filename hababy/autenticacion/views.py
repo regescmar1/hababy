@@ -15,7 +15,7 @@ import os
 from django.core.mail import send_mail
 from django.conf import settings
 
-from autenticacion.forms.forms import   UsuariaLoginForm,RegistroForm
+from autenticacion.forms.forms import    ModificarContraseniaForm, OlvidoContraseniaForm,UsuariaLoginForm,RegistroForm
 import braintree
 from django.core.exceptions import ObjectDoesNotExist
 import random
@@ -238,4 +238,58 @@ def procesar_pago(request):
 
 def registro_completado(request):
     return render(request, 'registro_completado.html')
+
+def olvido_contrasenia(request):
+    if request.method == 'POST':
+        form = OlvidoContraseniaForm(request.POST)
+        print(form.is_valid())
+        if form.is_valid():
+            codigo_confirmacion = ''.join(random.choices('0123456789', k=6))
+            request.session['codigo_confirmacion'] = codigo_confirmacion
+            enviar_correo_confirmacion(form.cleaned_data['email'], codigo_confirmacion)
+            request.session['registro_data']= form.cleaned_data  
+            request.session['email_olvido']=form.cleaned_data['email']  
+            
+            return redirect('verificar_codigo_para_contrasenia')
+    else:
+        form = OlvidoContraseniaForm()
+    return render(request, 'olvido_contrasenia.html', {'form': form})
+
+def verificar_codigo_para_contrasenia(request):
+    if request.method == 'POST':
+        codigo_ingresado = request.POST.get('codigo_confirmacion')
+        codigo_correcto = request.session.get('codigo_confirmacion')
+
+        if codigo_ingresado == codigo_correcto:
+            return redirect('modificar_contrasenia')
+        else:
+           
+            return render(request, 'codigo_error.html')
+
+    return render(request, 'verificar_codigo.html')
+
+def modificar_contrasenia(request):
+    email_olvido= request.session.get('email_olvido')
+    print('email_olvido',email_olvido)
+    user = get_object_or_404(User, email=email_olvido)
+    if request.method == 'POST':
+        form = ModificarContraseniaForm(request.POST)
+        print(form.is_valid())
+        if form.is_valid():
+            new_password1 = form.cleaned_data['new_password1']
+            print('nueva contraseña1: ',new_password1)
+            new_password2 = form.cleaned_data['new_password2']
+            print('nueva contraseña2:',new_password2)
+            if new_password1 and new_password2 and new_password1 == new_password2:
+                user.set_password(new_password1)
+                user.save()
+                print('usuario',user)
+                update_session_auth_hash(request, user)
+            messages.success(request, 'Tu contraseña ha sido actualizada exitosamente.')
+            return redirect('/autenticacion/login_usuaria/')       
+    else:
+      
+        form = ModificarContraseniaForm()
+
+    return render(request, 'modificar_contrasenia.html',{'form': form})
 

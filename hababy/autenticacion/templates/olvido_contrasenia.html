@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}Recuperar Contraseña{% endblock %}
+
+{% block content %}
+
+<div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="text-center">Recuperar Contraseña:</h2>
+            </div>
+            <div class ="card-body">
+                <form class="d-flex flex-column align-items-center" action="/autenticacion/login_usuaria/olvido_contrasenia/" method="post">
+                    {% csrf_token %}
+                    
+                    <div class="form-group w-100">
+                        <label for="email">Email:</label>
+                        <input type="email" class="form-control" id="email" name="email" required>
+                        {% for error in form.email.errors %}
+                            <span class="error-message">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+
+                    <button class="btn btn-primary btn-block" type="submit" >Recuperar contraseña</button>
+                   
+                </form>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% include 'footer.html' %}
+{% endblock %}
+<style>
+   .error-message {
+    color: red;
+    border: 1px solid red;
+    padding: 5px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+</style>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js">
+
+</script>

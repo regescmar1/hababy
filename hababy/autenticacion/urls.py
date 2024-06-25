@@ -13,6 +13,9 @@ urlpatterns = [
     path('registro/verificar_codigo_para_correo/',views.verificar_codigo_para_correo,name="verificar_codigo_para_correo"),
     path('registro/braintree/', views.braintree_view, name='braintree'),
     path('registro/braintree/procesar_pago/', views.procesar_pago, name='procesar_pago'),
+    path('login_usuaria/olvido_contrasenia/', views.olvido_contrasenia, name='olvido_contrasenia'),
+    path('login_usuaria/olvido_contrasenia/modificar_contrasenia/', views.modificar_contrasenia, name='modificar_contrasenia'),
+    path('login_usuaria/olvido_contrasenia/verificar_codigo_para_contrasenia/', views.verificar_codigo_para_contrasenia, name='verificar_codigo_para_contrasenia'),
 
     
 

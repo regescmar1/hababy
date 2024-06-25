@@ -52,3 +52,23 @@ class RegistroForm(forms.Form):
         return cleaned_data
 
     
+class OlvidoContraseniaForm(forms.Form):
+    email = forms.EmailField()
+    def clean_email(self):
+        email = self.cleaned_data['email']
+        if User.objects.filter(email=email).exists():
+            return email
+        else:
+            raise forms.ValidationError('No existe usuario con ese email.')
+        
+class ModificarContraseniaForm(forms.Form):
+    new_password1 = forms.CharField(label='New Password', widget=forms.PasswordInput, required=False)
+    new_password2 = forms.CharField(label='Confirm New Password', widget=forms.PasswordInput, required=False)
+
+    def clean(self):
+        cleaned_data = super().clean()
+        new_password1 = cleaned_data.get('new_password1')
+        new_password2 = cleaned_data.get('new_password2')
+        if new_password1 and new_password2 and new_password1 != new_password2:
+            raise forms.ValidationError('Las contraseñas no coinciden.')
+        return cleaned_data
