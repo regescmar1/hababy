@@ -29,6 +29,7 @@ urlpatterns = [
     path('politica_privacidad/', hababy_views.politica_privacidad,name="politica_privacidad"),
     path('oauth/', include('social_django.urls', namespace='social')),
     path('autenticacion/', include('autenticacion.urls')), 
+    path('educacion_maternal/',include('educacion_maternal.urls')),
     
 ]
 

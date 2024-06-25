@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+{% block title %}Sesion{% endblock %}
+{% block content %}
+{% include 'menu.html' %}
+<div class="container d-flex justify-content-center" style="height: 100vh;">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="text-center">{{sesion_existente.titulo}}</h2>
+            </div>
+            <div class ="card-body"> 
+                <form id="sesionForm" action="#" method="POST" class="d-flex flex-column align-items-center" >
+                
+                
+                    {% csrf_token %}
+                    <div class="form-group w-100">
+                        <label for="observaciones">Titulo:</label> 
+                        {{form.titulo}}
+                    </div>
+
+                    <div class="form-group w-100">
+                        <label for="fecha">Fecha:</label>   
+                        {{form.fecha}}
+                    </div>
+          
+                   
+
+                    <div class="form-group w-100">
+                        <label for="observaciones">Observaciones:</label> 
+                    </div>
+                    <div class="col-md-12">
+                        {{form.observaciones}}
+                        {% for error in form.observaciones.errors %}
+                                <span class="error-message">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+
+                    <button id="editarBtn" class="btn btn-primary btn-block">Editar</button>
+                   
+                    <a href="/educacion_maternal/sesion/{{sesion_id}}/eliminar/" id= "eliminarBtn" class="btn btn-danger btn-block">Eliminar</a>
+                    
+                
+                
+                    <button type="submit"  id="guardarBtn" class="btn btn-primary btn-block" style="display: none;" >Guardar</button>
+                    
+                    
+                </form>
+               
+            </div>
+        </div>
+    </div>
+</div>
+{% include 'footer.html' %}
+<script>
+ 
+   
+   
+    document.addEventListener('DOMContentLoaded', function() {
+        var form = document.getElementById('sesionForm');
+        var editarBtn = document.getElementById('editarBtn');
+        var guardarBtn = document.getElementById('guardarBtn');
+        var fields = form.querySelectorAll('input, textarea, select');
+       
+
+        fields.forEach(function(field) {
+            field.disabled = true;
+            eliminarBtn.style.display='none';
+        });
+
+
+        editarBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            editarBtn.style.display = 'none';
+            guardarBtn.style.display = 'block';
+            eliminarBtn.style.display='block';
+   
+            fields.forEach(function(field) {
+                field.disabled = false;
+            });
+        });
+
+        
+
+
+
+        form.addEventListener('submit', function() {
+
+        guardarBtn.style.display = 'block';
+    });
+    });
+</script>
+<style>
+    .error-message {
+        color: red;
+        font-size: 12px;
+        margin-top: 5px;
+        display: block;
+    }
+
+    .hidden {
+        display: none; 
+    }
+</style>
+{% endblock %}
