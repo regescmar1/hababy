@@ -72,3 +72,34 @@ class ModificarContraseniaForm(forms.Form):
         if new_password1 and new_password2 and new_password1 != new_password2:
             raise forms.ValidationError('Las contraseñas no coinciden.')
         return cleaned_data
+    
+
+class MiPerfilForm(forms.Form):
+    username = forms.CharField(max_length=150, required=False)
+    email = forms.EmailField(required=False)
+    new_password1 = forms.CharField(label='New Password', widget=forms.PasswordInput, required=False)
+    new_password2 = forms.CharField(label='Confirm New Password', widget=forms.PasswordInput, required=False)
+    
+
+
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        usuario_id = self.initial.get('usuario_id')
+        if username and User.objects.filter(username=username).exclude(pk=usuario_id).exists():
+            raise forms.ValidationError('Este nombre de usuario ya está en uso.')
+        return username
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        usuario_id = self.initial.get('usuario_id')
+        if email and User.objects.filter(email=email).exclude(pk=usuario_id).exists():
+            raise forms.ValidationError('Este correo electrónico ya está en uso.')
+        return email
+
+    def clean(self):
+        cleaned_data = super().clean()
+        new_password1 = cleaned_data.get('new_password1')
+        new_password2 = cleaned_data.get('new_password2')
+        if new_password1 and new_password2 and new_password1 != new_password2:
+            raise forms.ValidationError('Las contraseñas no coinciden.')
+        return cleaned_data

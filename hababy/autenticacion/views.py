@@ -15,7 +15,7 @@ import os
 from django.core.mail import send_mail
 from django.conf import settings
 
-from autenticacion.forms.forms import    ModificarContraseniaForm, OlvidoContraseniaForm,UsuariaLoginForm,RegistroForm
+from autenticacion.forms.forms import    ModificarContraseniaForm, OlvidoContraseniaForm,UsuariaLoginForm,RegistroForm,MiPerfilForm
 import braintree
 from django.core.exceptions import ObjectDoesNotExist
 import random
@@ -383,3 +383,42 @@ def procesar_pago_social(request):
         return JsonResponse({"status": "error", "message": "Método no permitido"}, status=405)
 
 
+@login_required
+def mi_perfil(request):
+    user=request.user
+    if request.method == 'POST':
+        form = MiPerfilForm(request.POST, initial={'usuario_id': user.id})
+        if form.is_valid():
+            user.username = form.cleaned_data['username']
+            user.email = form.cleaned_data['email']
+            user.save()
+            new_password1 = form.cleaned_data.get('new_password1')
+            new_password2 = form.cleaned_data.get('new_password2')
+            if new_password1 and new_password2 and new_password1 == new_password2:
+                user.set_password(new_password1)
+                user.save()
+                update_session_auth_hash(request, user)
+            messages.success(request, 'Tu perfil ha sido actualizado exitosamente.')
+            return redirect('perfil_actualizado')       
+    else:
+        form = MiPerfilForm(initial={'username': user.username, 'email': user.email,'usuario_id': user.id})
+        
+    
+    return render(request, 'mi_perfil.html', {'form': form})
+
+
+@login_required
+def perfil_actualizado(request):
+    return render(request, 'perfil_actualizado.html')
+
+
+@login_required
+def eliminar_mi_perfil(request):
+    form=MiPerfilForm(request.POST or None)
+    if request.method== 'POST':
+        perfil_a_eliminar=User.objects.filter(username=request.user.username).first()
+        if perfil_a_eliminar:
+            perfil_a_eliminar.delete()
+            return redirect('/')
+    else:
+        return render(request, 'eliminar_mi_perfil.html',{'form':form})
