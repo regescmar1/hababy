@@ -293,3 +293,93 @@ def modificar_contrasenia(request):
 
     return render(request, 'modificar_contrasenia.html',{'form': form})
 
+
+def braintree_social(request):
+    print('000')
+    if request.method == 'POST':
+        nonce = request.POST.get('payment_method_nonce')
+        print('0:',nonce)
+        if nonce:
+            gateway = braintree.BraintreeGateway(
+                braintree.Configuration(
+                    environment=braintree.Environment.Sandbox,
+                    merchant_id=settings.BRAINTREE_MERCHANT_ID,
+                    public_key=settings.BRAINTREE_PUBLIC_KEY,
+                    private_key=settings.BRAINTREE_PRIVATE_KEY
+                )
+            )
+
+            result = gateway.transaction.sale({
+                "amount": "1.99",  
+                "payment_method_nonce": nonce,
+                "options": {
+                    "submit_for_settlement": True
+                }
+            })
+            print(result.is_success)
+            if result.is_success:
+                ultimo_usuario = User.objects.latest('id')
+                print(ultimo_usuario)
+                estado_pago=EstadoPago(usuaria=ultimo_usuario,pago_completado=True)  
+                estado_pago.save()      
+                return render(request,'registro_completado.html',{'estado_pago':estado_pago})        
+               # return redirect('registro_completado')
+            else:
+               
+                    
+                error_message = result.message
+
+    else:
+        print('0')
+        gateway = braintree.BraintreeGateway(
+            braintree.Configuration(
+                environment=braintree.Environment.Sandbox,
+                merchant_id=settings.BRAINTREE_MERCHANT_ID,
+                public_key=settings.BRAINTREE_PUBLIC_KEY,
+                private_key=settings.BRAINTREE_PRIVATE_KEY
+            )
+        )
+        client_token = gateway.client_token.generate()
+        return render(request, 'braintree_social.html', {'braintree_client_token': client_token})
+    
+def procesar_pago_social(request):
+    if request.method == 'POST':
+        body_unicode = request.body.decode('utf-8')
+        body_data = json.loads(body_unicode)
+        
+        nonce = body_data.get('nonce')
+
+        if nonce:
+            gateway = braintree.BraintreeGateway(
+                braintree.Configuration(
+                    environment=braintree.Environment.Sandbox,
+                    merchant_id=settings.BRAINTREE_MERCHANT_ID,
+                    public_key=settings.BRAINTREE_PUBLIC_KEY,
+                    private_key=settings.BRAINTREE_PRIVATE_KEY
+                )
+            )
+
+            result = gateway.transaction.sale({
+                "amount": "1.99",  
+                "payment_method_nonce": nonce,
+                "options": {
+                    "submit_for_settlement": True
+                }
+            })
+
+            if result.is_success:
+                ultimo_usuario = User.objects.latest('id')
+                estado_pago=EstadoPago(usuario=ultimo_usuario,pago_completado=True)  
+                estado_pago.save()      
+                
+                return JsonResponse({"status": "success"})
+
+            else:
+                error_message = result.message
+                return JsonResponse({"status": "error", "message": error_message})
+        else:
+            return JsonResponse({"status": "error", "message": "Nonce de pago no proporcionado"})
+    else:
+        return JsonResponse({"status": "error", "message": "Método no permitido"}, status=405)
+
+

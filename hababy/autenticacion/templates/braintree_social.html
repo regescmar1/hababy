@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pago con Braintree</title>
+
+    <script src="https://js.braintreegateway.com/web/dropin/1.31.0/js/dropin.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container d-flex justify-content-center " style="height: 100vh;">
+  
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="text-center">Pago con Braintree</h2>
+                    </div>
+                    <div class="card-body">
+                        <p>El registro en la app tiene un coste de tan solo 1.99€</p>
+                        <form id="paymentForm">
+                            {% csrf_token %}
+                            <div id="dropin-container"></div>
+                            <button type="submit" class="btn btn-primary btn-block">Pagar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% include 'footer.html' %}
+    <script>
+        var form = document.getElementById('paymentForm');
+        var clientToken = "{{ braintree_client_token }}";
+
+        braintree.dropin.create({
+            authorization: clientToken,
+            container: '#dropin-container'
+        }, function (createErr, instance) {
+            if (createErr) {
+                console.error('Error initializing Braintree:', createErr);
+                return;
+            }
+            form.addEventListener('submit', function (event) {
+                event.preventDefault();
+
+                instance.requestPaymentMethod(function (requestPaymentMethodErr, payload) {
+                    if (requestPaymentMethodErr) {
+                        console.log('Error requesting payment method');
+                        return;
+                    }
+
+ 
+                    console.log(payload.nonce);
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('POST', 'procesar_pago_social/', true);
+                    xhr.setRequestHeader('Content-Type', 'application/json');
+                    xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
+                  
+                    xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+
+                        window.location.href = '/autenticacion/registro_completado/';
+                    }
+                };
+                xhr.send(JSON.stringify({ nonce: payload.nonce}));
+
+
+                });
+            });
+        });
+
+    </script>
+    
+</body>
+</html>
