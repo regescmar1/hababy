@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}Contacto{% endblock %}
+{% block content %}
+
+<div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="text-center">Contacto</h2>
+            </div>
+            <div class ="card-body"> 
+                <p><strong>Correo electrónico:</strong> developerrekerre@gmail.com</p>
+                <p><strong>Teléfono:</strong> +34 111 111 111</p>
+                <button onclick="goBack()" class="btn btn-primary btn-block">Volver</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% include 'footer.html' %}
+<script>
+    function goBack() {
+        window.history.back();
+      }
+    </script>
+{% endblock %}

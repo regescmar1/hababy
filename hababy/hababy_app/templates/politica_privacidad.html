@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% block title %}Política de Privacidad{% endblock %}
+{% block content %}
+
+<div class="container d-flex justify-content-center" >
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="text-center">Política de Privacidad</h2>
+            </div>
+            <div class ="card-body"> 
+                <p>Gracias por utilizar nuestra aplicación para futuras mamás.</p>
+                <p>Tu privacidad es importante para nosotros. Esta Política de Privacidad explica cómo recopilamos, usamos, divulgamos y protegemos la información personal de nuestros usuarios.</p>
+                <h3>Información que recopilamos:</h3>
+                <ul>
+                    <li><strong>Información de registro:</strong> Recopilamos tu nombre de usuario, contraseña y dirección de correo electrónico cuando te registras en nuestra aplicación.</li>
+                    <li><strong>Información de citas y clases:</strong> Recolectamos información sobre las citas programadas a lo largo del embarazo, así como las clases de educación maternal que el usuario ha registrado.</li>
+                    <li><strong>Información de análisis médicos u otros informes:</strong> Los usuarios tienen la opción de cargar fotos de análisis médicos o informes en la aplicación.</li>
+                </ul>
+
+                <h3>Uso de la información:</h3>
+                <ul>
+                    <li>Utilizamos la <strong>información de registro</strong> para crear y gestionar tu cuenta, brindarte acceso a la aplicación y que puedas consultarla en cualquier momento.</li>
+                    <li>La <strong>información de citas y clases</strong> se utiliza para gestionar las citas y proporcionar información relevante sobre la educación maternal.</li>
+                    <li>La <strong>información de los análisis médicos u otros informes</strong> se utiliza para generar documentos en formato PDF que el usuario puede revisar y compartir con su médico u otros profesionales de la salud.</li>
+                </ul>
+
+                <h3>Divulgación de la información:</h3>
+                <p>No compartimos tu información personal con terceros, excepto en los casos siguientes:</p>
+                    <ul>
+                        <li>Cuando sea necesario para cumplir con la ley o con procesos legales.</li>
+                        <li>Cuando sea necesario para proteger nuestros derechos, tu seguridad o la seguridad de otros usuarios.</li>
+                        <li>Cuando tengamos tu consentimiento explícito para hacerlo.</li>
+                    </ul>
+
+    
+                <h3>Seguridad de la información:</h3>
+                    <p> Implementamos medidas de seguridad para proteger tu información personal contra accesos no autorizados, divulgación, alteración o destrucción.</p>
+               
+
+                <h3>Tus derechos:</h3>
+                   <p>Puedes acceder, corregir o eliminar tu información personal en cualquier momento a través de la configuración de tu cuenta en la aplicación.
+                    Si tienes preguntas o preocupaciones sobre nuestra Política de Privacidad o sobre el manejo de tus datos personales, contáctanos @gmail.com.</p>
+           
+
+                <h3>Cambios en la política de privacidad</h3>
+                    <p>Nos reservamos el derecho de actualizar esta Política de Privacidad en cualquier momento. Te notificaremos sobre los cambios mediante un aviso en nuestra aplicación o por correo electrónico.</p>
+                
+
+                <button onclick="goBack()" class="btn btn-primary btn-block">Volver</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block footer %}
+{% include 'footer.html' %}
+
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>
+{% endblock %}
+
+                
+                
+                
