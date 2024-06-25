@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}developerrekerre{% endblock %}
+{% block content %}
+
+<div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="text-center">developerrekerre</h2>
+            </div>
+            <div class ="card-body"> 
+                <p><strong>developerrekerre</strong> surge en 2024 gracias a Regina Escalera. Al haber sido creada a comienzos de este año se encuentra en sus inicios. Su primer proyecto es <strong>hababy</strong> el cual aun sigue en desarrollo y sobre el que se tienen bastantes ideas a largo plazo para que siga desarrollandose.</p>
+                <p>El objetivo principal es centrarse en <strong>hababy</strong> y hasta que no esten desarrolladas todas las ideas pendientes, que no son pocas... no se centrará en otros proyectos.</p>
+                <p>Como se mencionó anteriormente la fundadora de esta empresa es Regina Escalera la cual trabaja y se organiza sola, es uno de los motivos por los que prefiere centrarse en un único proyecto y hasta no abarcarlo todo y solo tener que dedicarse al mantenimiento del mismo no tomar nuevos proyectos.</p>
+                <p>Los valores principales son el esfuerzo, la paciencia, la constancia y la planificación.</p>
+                <p>Al ser un único miembro del equipo la empresa no dispone de oficina física, puesto que Regina trabaja desde casa. De todos modos si necesita ponerse en contacto con ella para solitar cualquier información no dude en enviarle un mail a developerrekerre@gmail.com</p>
+                <button onclick="goBack()" class="btn btn-primary btn-block">Volver</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% include 'footer.html' %}
+<script>
+    function goBack() {
+        window.history.back();
+      }
+    </script>
+{% endblock %}

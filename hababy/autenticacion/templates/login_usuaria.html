@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+
+<div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="text-center">Login:</h2>
+            </div>
+            <div class ="card-body">
+                <form class="d-flex flex-column align-items-center" action="/autenticacion/login_usuaria/" method="post">
+                    {% csrf_token %}
+                    
+                    <div class="form-group w-100">
+                        <label for="email">Username:</label>
+                        {{form.username}}
+                        {% for error in form.username.errors %}
+                            <span class="error-message">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    <div class="form-group w-100">
+                        <label for="password">Contraseña:</label>
+                        {{form.password}}
+                        {% for error in form.password.errors %}
+                        <span class="error-message">{{ error }}</span>
+                    {% endfor %}
+                    <div class="error-message">
+                    {{ form.non_field_errors }}
+                    </div>
+                    </div>
+                    <button class="btn btn-primary btn-block" type="submit" id="inicioSesion" onclick="return limpiarCamposErroneos()">Iniciar Sesión</button>
+                    <a href="olvido_contrasenia/">¿Ha olvidado su contraseña?</a>
+                </form>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+{% block footer %}
+{% include 'footer.html' %}
+{% endblock %}
+
+<style>
+   .error-message {
+    color: red;
+    border: 1px solid red;
+    padding: 5px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+</style>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js">
+    function limpiarCamposErroneos() {
+        var camposErroneos = document.querySelectorAll('.error-message');
+        camposErroneos.forEach(function(campoError) {
+            var campo = campoError.previousElementSibling;
+            if(campo){
+                console.log(campo)
+                campo.value='';
+            }
+        });
+        return true;
+    }
+</script>

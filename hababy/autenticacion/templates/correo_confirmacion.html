@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmación de correo electrónico</title>
+</head>
+<body>
+    <p>Hola {{ user.username }},</p>
+    <p>Gracias por registrarte en nuestro sitio. Por favor, haz clic en el siguiente enlace para confirmar tu dirección de correo electrónico:</p>
+    <p><a href="{{ confirm_url }}">Confirmar correo electrónico</a></p>
+    <p>Si no has solicitado este correo electrónico, puedes ignorarlo.</p>
+    <p>Gracias,</p>
+    <p>El equipo de nuestro sitio</p>
+    {% include 'footer.html' %}
+</body>
+</html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

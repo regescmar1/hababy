@@ -1,0 +1,44 @@
+hababy/autenticacion/__pycache__/__init__.cpython-312.pyc
+hababy/autenticacion/__pycache__/urls.cpython-312.pyc
+# Byte-compiled / optimized / DLL files
+*.py[cod]
+__pycache__/
+*.so
+
+# C extensions
+*.c
+
+# Distribution / packaging
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Django stuff:
+*.log
+*.pot
+*.pyc
+__pycache__/
+db.sqlite3
+media
+staticfiles
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+
+# Environments
+.env
+.env.*
+
+# VSCode
+.vscode/
