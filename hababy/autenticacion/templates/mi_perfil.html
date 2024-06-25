@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+{% block title %}Mi perfil{% endblock %}
+
+{% block content %}
+{% include 'menu.html' %}
+<div class="container">
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="text-center">Mi perfil:</h2>
+                </div>
+                <div class="card-body">
+                    <form id="miPerfilForm" action="/autenticacion/mi_perfil/" method="post" >
+                        {% csrf_token %}
+                     
+                        {{ form.as_p }}
+                        <hr>
+                   
+    
+                        <button id="editarBtn" class="btn btn-primary btn-block">Editar</button>
+                    
+                        <a href="/autenticacion/mi_perfil/eliminar_mi_perfil" id= "eliminarBtn" class="btn btn-danger btn-block">Eliminar</a>
+                        <button type="submit"  id="guardarBtn" class="btn btn-primary btn-block" style="display: none;" >Guardar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% include 'footer.html' %}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+ 
+   
+
+    document.addEventListener('DOMContentLoaded', function() {
+        var form = document.getElementById('miPerfilForm');
+        var editarBtn = document.getElementById('editarBtn');
+        var guardarBtn = document.getElementById('guardarBtn');
+        var id_cita_existente=document.getElementById('id_cita_existente');
+        var fields = form.querySelectorAll('input, textarea, select');
+        
+
+        fields.forEach(function(field) {
+            field.disabled = true;
+            eliminarBtn.style.display='none';
+        });
+
+
+        editarBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            editarBtn.style.display = 'none';
+            guardarBtn.style.display = 'block';
+            eliminarBtn.style.display='block';
+            fields.forEach(function(field) {
+                field.disabled = false;
+            });
+        });
+
+       
+        
+
+
+
+    form.addEventListener('submit', function() {   
+       
+
+        
+        guardarBtn.style.display = 'block';
+    });
+
+
+});
+
+
+</script>
+<style>
+    .error-message {
+    color: red;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #f8f9fa; 
+    padding: 20px;
+    text-align: center; 
+    border-top: 1px solid #dee2e6; 
+}
+</style>
+{% endblock %}
