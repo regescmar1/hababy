@@ -47,7 +47,7 @@ urlpatterns = [
     path('gestion_citas/citas_segundo/obstetra/', include('obstetra.urls')),
     path('gestion_citas/citas_tercer/obstetra/', include('obstetra.urls')),
 
-
+    path('vacunas/',include('vacuna.urls')),
 
 ]
 

@@ -1,0 +1,142 @@
+{% extends 'base.html' %}
+{% block title %}Vacuna{% endblock %}
+{% block content %}
+{% include 'menu.html' %}
+<div class="container d-flex justify-content-center" style="height: 100vh;">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                {% if nombre == 'gripe' %}
+                <h2 class="text-center">Vacuna Gripe:</h2>
+                {% elif nombre == 'tos_ferina' %}
+                <h2 class="text-center">Vacuna Tos Ferina:</h2>
+               
+                {% endif %}
+            </div>
+            <div class ="card-body"> 
+                {% if nombre == 'gripe' %}
+                <form id="vacunaForm" action="/vacunas/gripe/" method="POST" class="d-flex flex-column align-items-center"  >
+                {% elif nombre == 'tos_ferina' %}
+                <form id="vacunaForm" action="/vacunas/tos_ferina/" method="POST" class="d-flex flex-column align-items-center"  >
+                
+                {% endif %}
+                
+                {% csrf_token %}
+
+                <div class="form-group w-100">
+                    <label for="fecha">Fecha:</label>   
+                    {{form.fecha}}
+                </div>
+
+
+                <div class="form-group w-100">
+                    <label for="observaciones">Observaciones:</label> 
+                </div>
+                    
+                <div class="col-md-12">
+                    {{form.observaciones}}
+                    {% for error in form.observaciones.errors %}
+                        <span class="error-message">{{ error }}</span>
+                    {% endfor %}
+                </div>
+                    
+                    
+                
+                
+                   
+                    
+                    <button id="editarBtn" class="btn btn-primary btn-block">Editar</button>
+                    {% if nombre == 'gripe' %}
+                    <a href="/vacunas/gripe/eliminar_cita_vacuna" id= "eliminarBtn" class="btn btn-danger btn-block">Eliminar</a>
+                    {% elif nombre == 'tos_ferina' %}
+                    <a href="/vacunas/tos_ferina/eliminar_cita_vacuna" id= "eliminarBtn" class="btn btn-danger btn-block">Eliminar</a>
+                    {% elif nombre == 'antid' %}
+                    <a href="/vacunas/antid/eliminar_cita_vacuna" id= "eliminarBtn" class="btn btn-danger btn-block">Eliminar</a>
+                    {% endif %}
+                  
+                
+                    <button type="submit"  id="guardarBtn" class="btn btn-primary btn-block" style="display: none;" >Guardar</button>
+                    
+                    
+                </form>
+               
+            </div>
+        </div>
+    </div>
+</div>
+{% include 'footer.html' %}
+<script>
+ 
+   
+
+    document.addEventListener('DOMContentLoaded', function() {
+        var form = document.getElementById('vacunaForm');
+        var editarBtn = document.getElementById('editarBtn');
+        var guardarBtn = document.getElementById('guardarBtn');
+        var fields = form.querySelectorAll('input, textarea, select');
+
+        fields.forEach(function(field) {
+            field.disabled = true;
+            eliminarBtn.style.display='none';
+        });
+
+
+        editarBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            editarBtn.style.display = 'none';
+            guardarBtn.style.display = 'block';
+            eliminarBtn.style.display='block';
+
+            fields.forEach(function(field) {
+                field.disabled = false;
+            });
+        });
+
+       
+        
+
+
+
+    form.addEventListener('submit', function() {   
+
+        var rhNegativoCheckbox = document.getElementById('id_rh_negativo');   
+        var rhNegativo = rhNegativoCheckbox.checked; 
+        console.log("Valor de rhNegativo:", rhNegativo);
+        if (rhNegativo) {
+            alert("¡Al tener Rh- debe ponerse la vacuna antiD!");
+        }
+         
+
+        try {
+            var testOSullivanPositivoCheckbox = document.getElementById('id_test_o_sullivan_positivo');
+            var testOSullivanPositivo = testOSullivanPositivoCheckbox.checked; 
+            console.log("Valor de testOSullivanPositivo:", testOSullivanPositivo);
+            if (testOSullivanPositivo) {
+                alert("Al dar positivo en el test de O'Sullivan (media curva) debe solicitar realizarse test de O'Sullivan (curva larga) .");
+            }
+        } catch (error) {
+            console.error("Error:", error);
+        }
+        
+       
+        guardarBtn.style.display = 'block';
+    });
+
+
+});
+
+
+</script>
+<style>
+    .error-message {
+        color: red;
+        font-size: 12px;
+        margin-top: 5px;
+        display: block;
+    }
+
+    .hidden {
+        display: none; 
+    }
+</style>
+{% endblock %}

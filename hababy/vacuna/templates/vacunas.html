@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}Vacunas{% endblock %}
+{% block content %}
+{% include 'menu.html' %}
+<div class="container d-flex justify-content-center" style="height: 100vh;">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="text-center">Vacunas:</h2>
+            </div>
+            <div class ="card-body"> 
+                <a href="gripe" class="btn btn-primary btn-block">Vacuna Gripe</a>
+                <a href="tos_ferina" class="btn btn-primary btn-block">Vacuna Tos Ferina</a>
+           
+
+            </div>
+        </div>
+    </div>
+</div>
+{% include 'footer.html' %}
+{% endblock %}
+
+<style>
+    .img-custom {
+        width: 200px;
+        height: 300px;
+}
+</style>
