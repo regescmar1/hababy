@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}Nutrición{% endblock %}
+{% block content %}
+{% include 'menu.html' %}
+<div class="container d-flex justify-content-center" style="height: 100vh;">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="text-center">Nutrición:</h2>
+            </div>
+            <div class ="card-body"> 
+                <p>En el siguiente <a href="https://www.aesan.gob.es/AECOSAN/docs/documentos/nutricion/triptico_embarazadas.pdf">enlace</a> se encuentra un pdf bastante completo en el que podrá encontrar información acerca de:</p>
+                <ul>
+                    <li>Consejos nutricionales.</li>
+                    <li>Normas básicas de manipulación higienica de alimentos.</li>
+                    <li>Precauciones a tomar con algunos alimentos.</li>
+                    <li>Alimentos que se deben evitar durante el embarazo.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% include 'footer.html' %}
+{% endblock %}
