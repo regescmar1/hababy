@@ -32,6 +32,8 @@ urlpatterns = [
     path('educacion_maternal/',include('educacion_maternal.urls')),
     path('consejos/',include('consejos.urls')),
     path('gestion_citas/',include('gestion_citas.urls')),
+    path('gestion_citas/citas_primer/odontologia/',include('odontologia.urls')),
+
 
 ]
 
