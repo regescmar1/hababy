@@ -1,0 +1,51 @@
+<div class="form-group w-100">
+    <label for="fecha">Fecha:</label>   
+    {{form.fecha}}
+</div>
+<div class="form-group w-100">
+    <label for="peso">Peso(kg):</label> 
+    {{form.peso}}
+    {% for error in form.peso.errors %}
+            <span class="error-message">{{ error }}</span>
+    {% endfor %}
+    
+</div>
+
+<div class="form-group w-100">
+    <label for="altura">Altura(m):</label> 
+    {{form.altura}}
+    {% for error in form.altura.errors %}
+            <span class="error-message">{{ error }}</span>
+    {% endfor %}
+    
+</div>
+<div class="form-group w-100">
+    <label for="imc">IMC:</label> 
+    {{form.imc}}
+    {% for error in form.imc.errors %}
+            <span class="error-message">{{ error }}</span>
+    {% endfor %}
+</div>
+<div class="form-group w-100">
+    <label for="tas">TAS:</label> 
+    {{form.tas}}
+    {% for error in form.tas.errors %}
+            <span class="error-message">{{ error }}</span>
+    {% endfor %}
+</div>
+<div class="form-group w-100">
+    <label for="ta">TAD:</label> 
+    {{form.tad}}
+    {% for error in form.tad.errors %}
+    <span class="error-message">{{ error }}</span>
+{% endfor %}
+</div>
+
+<style>
+    .error-message {
+        color: red;
+        font-size: 12px;
+        margin-top: 5px;
+        display: block;
+    }
+</style>

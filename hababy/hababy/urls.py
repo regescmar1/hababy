@@ -33,7 +33,9 @@ urlpatterns = [
     path('consejos/',include('consejos.urls')),
     path('gestion_citas/',include('gestion_citas.urls')),
     path('gestion_citas/citas_primer/odontologia/',include('odontologia.urls')),
-
+    path('gestion_citas/citas_primer/matrona/', include('matrona.urls')),
+    path('gestion_citas/citas_segundo/matrona/', include('matrona.urls')),
+    path('gestion_citas/citas_tercer/matrona/', include('matrona.urls')),
 
 ]
 
