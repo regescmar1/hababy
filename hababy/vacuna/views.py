@@ -1,14 +1,19 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
 
+from extracciones.models import CitaExtracciones
 from vacuna.models import CitaVacuna
 from .forms.forms import CitaVacunaForm
 
 # Create your views here.
 @login_required
 def vacunas(request):
-   
-    return render(request, 'vacunas.html')
+    cita_extracciones_segundo=CitaExtracciones.objects.filter(usuaria=request.user, trimestre=2).first()
+    antid=False
+    if cita_extracciones_segundo:
+        if cita_extracciones_segundo.rh_negativo:
+            antid=True
+    return render(request, 'vacunas.html', {'antid':antid})
 
 
 def determinar_nombre(url):
@@ -17,7 +22,8 @@ def determinar_nombre(url):
         nombre = 'gripe'
     elif 'tos_ferina' in url:
         nombre = 'tos_ferina'
-  
+    elif 'antid' in url:
+        nombre = 'antid'
     return nombre
 
 

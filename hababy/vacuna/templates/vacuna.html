@@ -10,7 +10,8 @@
                 <h2 class="text-center">Vacuna Gripe:</h2>
                 {% elif nombre == 'tos_ferina' %}
                 <h2 class="text-center">Vacuna Tos Ferina:</h2>
-               
+                {% elif nombre == 'antid' %}
+                <h2 class="text-center">Vacuna antiD:</h2>
                 {% endif %}
             </div>
             <div class ="card-body"> 
@@ -18,7 +19,8 @@
                 <form id="vacunaForm" action="/vacunas/gripe/" method="POST" class="d-flex flex-column align-items-center"  >
                 {% elif nombre == 'tos_ferina' %}
                 <form id="vacunaForm" action="/vacunas/tos_ferina/" method="POST" class="d-flex flex-column align-items-center"  >
-                
+                {% elif nombre == 'antid' %}
+                <form id="vacunaForm" action="/vacunas/antid/" method="POST" class="d-flex flex-column align-items-center"  >
                 {% endif %}
                 
                 {% csrf_token %}
