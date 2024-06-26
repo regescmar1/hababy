@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+{% block title %}Obstetra{% endblock %}
+{% block content %}
+{% include 'menu.html' %}
+<div class="container d-flex justify-content-center" style="min-height: 100vh; ">
+    <div class="col-md-6"  style="flex: 1;">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="text-center">Obstetra:</h2>
+            </div>
+            <div class ="card-body"> 
+                {% if trimestre == 1 %}
+                <form id="obstetraForm" action="/gestion_citas/citas_primer/obstetra/" method="POST" class="d-flex flex-column align-items-center" >
+                {% elif trimestre == 2 %}
+                <form id="obstetraForm" action="/gestion_citas/citas_segundo/obstetra/" method="POST" class="d-flex flex-column align-items-center" >
+                {% elif trimestre == 3 and orden == 1 %}
+                <form id="obstetraForm" action="/gestion_citas/citas_tercer/obstetra/uno/" method="POST" class="d-flex flex-column align-items-center" >
+                {% elif trimestre == 3 and orden == 2 %}
+                <form id="obstetraForm" action="/gestion_citas/citas_tercer/obstetra/dos/" method="POST" class="d-flex flex-column align-items-center" >
+                {% elif trimestre == 3 and orden == 3 %}
+                <form id="obstetraForm" action="/gestion_citas/citas_tercer/obstetra/tres/" method="POST" class="d-flex flex-column align-items-center" >
+                {% endif %}
+                
+                {% csrf_token %}
+
+                    {% include 'matrona_comun_obstetra.html' %}
+                    <div class="form-group w-100">
+                        <label for="observaciones">Observaciones:</label> 
+                    </div>
+                    <div class="col-md-12">
+                        {{form.observaciones}}
+                        {% for error in form.observaciones.errors %}
+                                <span class="error-message">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    {% if  trimestre == 3 and orden == 3 %}
+                    <div class="form-group w-100">
+                        <label for="observaciones">Monitores:</label> 
+                    </div>
+                    <div class="col-md-12">
+                        {{form.monitores}}
+                        {% for error in form.monitores.errors %}
+                                <span class="error-message">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    
+                    <div class="form-group w-100">
+                        {% if trimestre == 1 %}
+                            <a href="/gestion_citas/citas_primer/obstetra/archivos"  id= "verArchivosBtn" class="btn btn-primary btn-block">Ver Archivos de la Eco</a>
+                        {% elif  trimestre == 2 %}
+                            <a href="/gestion_citas/citas_segundo/obstetra/archivos" id= "verArchivosBtn" class="btn btn-primary btn-block">Ver Archivos de la Eco</a>
+                        {% elif  trimestre == 3 and orden == 1 %}
+                            <a href="/gestion_citas/citas_tercer/obstetra/uno/archivos" id= "verArchivosBtn" class="btn btn-primary btn-block">Ver Archivos de la Eco</a>
+                        {% elif  trimestre == 3 and orden == 2 %}
+                            <a href="/gestion_citas/citas_tercer/obstetra/dos/archivos" id= "verArchivosBtn" class="btn btn-primary btn-block">Ver Archivos de la Eco</a>
+                        {% elif  trimestre == 3 and orden == 3%}
+                            <a href="/gestion_citas/citas_tercer/obstetra/tres/archivos" id= "verArchivosBtn" class="btn btn-primary btn-block">Ver Archivos de la Eco</a>
+                        {% endif %}
+                    </div>
+
+                    <button id="editarBtn" class="btn btn-primary btn-block">Editar</button>
+
+                    {% if trimestre == 1 %}
+                    <a href="/gestion_citas/citas_primer/obstetra/eliminar_cita_obstetra" id= "eliminarBtn" class="btn btn-danger btn-block">Eliminar</a>
+                    {% elif  trimestre == 2 %}
+                    <a href="/gestion_citas/citas_segundo/obstetra/eliminar_cita_obstetra" id= "eliminarBtn" class="btn btn-danger btn-block">Eliminar</a>
+                    {% elif  trimestre == 3 and orden == 1 %}
+                    <a href="/gestion_citas/citas_tercer/obstetra/eliminar_cita_obstetra/uno/" id= "eliminarBtn" class="btn btn-danger btn-block">Eliminar</a>
+                    {% elif  trimestre == 3 and orden == 2 %}
+                    <a href="/gestion_citas/citas_tercer/obstetra/eliminar_cita_obstetra/dos/" id= "eliminarBtn" class="btn btn-danger btn-block">Eliminar</a>
+                    {% elif  trimestre == 3  and orden == 3 %}
+                    <a href="/gestion_citas/citas_tercer/obstetra/eliminar_cita_obstetra/tres" id= "eliminarBtn" class="btn btn-danger btn-block">Eliminar</a>
+                    {% endif %}
+                    
+                    <button type="submit"  id="guardarBtn" class="btn btn-primary btn-block" style="display: none;" >Guardar</button>
+                    
+                    
+                </form>
+               
+            </div>
+        </div>
+    </div>
+</div>
+{% include 'footer.html' %}
+<script>
+ 
+   
+
+    document.addEventListener('DOMContentLoaded', function() {
+        var form = document.getElementById('obstetraForm');
+        var editarBtn = document.getElementById('editarBtn');
+        var guardarBtn = document.getElementById('guardarBtn');
+        var fields = form.querySelectorAll('input, textarea, select');
+
+        fields.forEach(function(field) {
+            field.disabled = true;
+            eliminarBtn.style.display='none';
+        });
+
+
+        editarBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            editarBtn.style.display = 'none';
+            guardarBtn.style.display = 'block';
+            eliminarBtn.style.display='block';
+
+            fields.forEach(function(field) {
+                field.disabled = false;
+            });
+        });
+
+        
+
+
+
+        form.addEventListener('submit', function() {
+
+            var peso = parseFloat(document.getElementById('id_peso').value);
+            var altura = parseFloat(document.getElementById('id_altura').value);
+            var imc = peso / (altura * altura);
+            document.getElementById('id_imc').value = imc.toFixed(2);
+            guardarBtn.style.display = 'block';
+    });
+    });
+</script>
+<style>
+    .error-message {
+        color: red;
+        font-size: 12px;
+        margin-top: 5px;
+        display: block;
+    }
+
+    .hidden {
+        display: none; 
+    }
+</style>
+{% endblock %}

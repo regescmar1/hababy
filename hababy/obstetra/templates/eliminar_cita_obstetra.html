@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}Eliminar Cita de Obstetra{% endblock %}
+
+{% block content %}
+{% include 'menu.html' %}
+<div class="container d-flex justify-content-center" style="height: 100vh;">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="text-center">Eliminar Cita de Obstetra</h2>
+            </div>
+            <div class ="card-body"> 
+                {% if trimestre == 1 %}
+                <form action="#" method="POST" class="d-flex flex-column align-items-center" >
+                {% elif trimestre == 2 %}
+                <form  action="#" method="POST" class="d-flex flex-column align-items-center" >
+                {% elif trimestre == 3 %}
+                <form action="#" method="POST" class="d-flex flex-column align-items-center" >
+                {% endif %}
+                    {% csrf_token %}
+                    <p>¿Estás seguro de que deseas eliminar esta cita de obstetra?</p>
+                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                   
+                    {% if trimestre == 1 %}
+                    <a href="/gestion_citas/citas_primer/obstetra/" class="btn btn-secondary">Cancelar</a>
+                    {% elif trimestre == 2 %}
+                    <a href="/gestion_citas/citas_segundo/obstetra" class="btn btn-secondary">Cancelar</a>
+                    {% elif trimestre == 3 and orden == 1%}
+                    <a href="/gestion_citas/citas_tercer/obstetra/uno" class="btn btn-secondary">Cancelar</a>
+                    {% elif trimestre == 3 and orden == 2%}
+                    <a href="/gestion_citas/citas_tercer/obstetra/dos" class="btn btn-secondary">Cancelar</a>
+                    {% elif trimestre == 3 and orden == 3%}
+                    <a href="/gestion_citas/citas_tercer/obstetra/tres" class="btn btn-secondary">Cancelar</a>
+                    {% endif %}
+                    
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% include 'footer.html' %}
+{% endblock %}

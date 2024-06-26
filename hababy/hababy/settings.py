@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'gestion_citas',
     'odontologia',
     'matrona',
+    'obstetra',
     
 ]
 
@@ -105,7 +106,7 @@ ROOT_URLCONF = 'hababy.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'autenticacion','consejos','educacion_maternal','gestion_citas','odontologia','matrona','hababy_app','templates'),],
+        'DIRS': [os.path.join(BASE_DIR, 'autenticacion','consejos','educacion_maternal','gestion_citas','odontologia','matrona','obstetra','hababy_app','templates'),],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
