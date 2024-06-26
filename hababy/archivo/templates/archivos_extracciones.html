@@ -1,0 +1,207 @@
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        .error-message {
+            color: red;
+            font-size: 12px;
+            margin-top: 5px;
+            display: block;
+        }
+    
+        .hidden {
+            display: none; 
+        }
+    
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px; 
+            margin-bottom: 20px; 
+        }
+    
+        table th, table td {
+            border: 1px solid #dddddd; 
+            text-align: left;
+            padding: 8px;
+        }
+        table th {
+            background-color: #f2f2f2; 
+        }
+        #accionVer, #accionDescargar, #accionEliminar {
+            text-align: center; 
+          
+        }
+        .button-container {
+            text-align: right;
+            margin-bottom: 20px; 
+        }
+        .icon-cell {
+            text-align: center; 
+        }
+        .icon {
+            margin-right: 5px; 
+        }
+
+        
+    </style>
+</head>
+<body>
+{% extends 'base.html' %}
+{% block title %}Ver Archivos Extracciones{% endblock %}
+{% block content %}
+{% include 'menu.html' %}
+<div class="container d-flex justify-content-center" style="height: 100vh;">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="text-center">Archivos del Análisis:</h2>
+            </div>
+            <div class ="card-body"> 
+                {% if trimestre == 1  %}
+                <form id="verArchivosForm" action="/gestion_citas/citas_primer/extracciones/archivos/" method="POST" class="d-flex flex-column align-items-center" enctype="multipart/form-data" >
+                {% elif  trimestre == 2 %}
+                <form id="verArchivosForm" action="/gestion_citas/citas_segundo/extracciones/archivos/" method="POST" class="d-flex flex-column align-items-center" enctype="multipart/form-data">
+                {% elif  trimestre == 3 %}
+                <form id="verArchivosForm" action="/gestion_citas/citas_tercer/extracciones/archivos/" method="POST" class="d-flex flex-column align-items-center" enctype="multipart/form-data">
+                
+                {% endif %}
+                
+                {% csrf_token %}
+                <input type="hidden" id="id_cita_existente" value="{{ cita_existente.pk }}">
+                
+                <p>{{cita_existente.pk}}</p>
+                
+                <h3>Listado de archivos:</h3>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nombre de archivo</th>
+                            <th id="accionVer">Ver</th>
+                            <th id="accionDescargar">Descargar</th>
+                            <th id="accionEliminar">Eliminar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for archivo in archivos_extracciones_existentes %}
+                        <tr>
+                            <td>{{ archivo.archivo }}</td>
+                            {% if trimestre == 1  %}
+                            <td class="icon-cell"><a href="/gestion_citas/citas_primer/extracciones/archivos/{{archivo.id}}" target="_blank"><i class="fas fa-eye icon"></i></a></td>
+                            <td class="icon-cell"><a href="/gestion_citas/citas_primer/extracciones/archivos/descargar/{{archivo.id}}"><i class="fas fa-download icon"></i></a></td>
+                            <td class="icon-cell"><a href="/gestion_citas/citas_primer/extracciones/archivos/eliminar/{{archivo.id}}"><i class="fas fa-trash-alt icon"></i></a></td>
+                            {% elif  trimestre == 2 %}
+                            <td class="icon-cell"><a href="/gestion_citas/citas_segundo/extracciones/archivos/{{archivo.id}}" target="_blank"><i class="fas fa-eye icon"></i></a></td>
+                            <td class="icon-cell"><a href="/gestion_citas/citas_segundo/extracciones/archivos/descargar/{{archivo.id}}"><i class="fas fa-download icon"></i></a></td>
+                            <td class="icon-cell"><a href="/gestion_citas/citas_segundo/extracciones/archivos/eliminar/{{archivo.id}}"><i class="fas fa-trash-alt icon"></i></a></td>
+                            {% elif  trimestre == 3 %}
+                            <td class="icon-cell"><a href="/gestion_citas/citas_tercer/extracciones/archivos/{{archivo.id}}" target="_blank"><i class="fas fa-eye icon"></i></a></td>
+                            <td class="icon-cell"><a href="/gestion_citas/citas_tercer/extracciones/archivos/descargar/{{archivo.id}}"><i class="fas fa-download icon"></i></a></td>
+                            <td class="icon-cell"><a href="/gestion_citas/citas_tercer/extracciones/archivos/eliminar/{{archivo.id}}"><i class="fas fa-trash-alt icon"></i></a></td>
+                            {% endif %}
+                        </tr>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <div class="form-group w-100" id="aniadir_archivo" style="display: none;">
+                    <label for="archivo">Añadir archivo:</label>
+                    <input type="file" id="archivo" name="archivo">
+                    {% for error in form.archivo.errors %}
+                                <span class="error-message">{{ error }}</span>
+                        {% endfor %}
+                </div>
+                <div class="button-container">
+                    {% if trimestre == 1 %}
+                        <a href="/gestion_citas/citas_primer/extracciones/archivos/generar_pdf"  id="generarPdf" class="btn btn-primary">Generar PDF</a>
+                    {% elif trimestre == 2 %}
+                        <a href="/gestion_citas/citas_segundo/extracciones/archivos/generar_pdf"  id="generarPdf" class="btn btn-primary">Generar PDF</a>
+                    {% elif trimestre == 3 %}
+                        <a href="/gestion_citas/citas_tercer/extracciones/archivos/generar_pdf"  id="generarPdf" class="btn btn-primary">Generar PDF</a>
+                    {% endif %}
+                </div>
+                
+                 
+                   
+                
+                {% if cita_existente %}
+                <button id="editarBtn" class="btn btn-primary btn-block">Editar</button>
+                {% endif %}
+                <button type="submit"  id="guardarBtn" class="btn btn-primary btn-block" style="display: none;" >Guardar</button>
+                
+               
+                
+                
+            </form>
+           
+        </div>
+    </div>
+</div>
+
+
+</body>
+<script>
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    var form = document.getElementById('verArchivosForm');
+    var editarBtn = document.getElementById('editarBtn');
+    var guardarBtn = document.getElementById('guardarBtn');
+    var fields = form.querySelectorAll('input, textarea, select');
+    var aniadir_archivo=document.getElementById('aniadir_archivo')
+
+
+    fields.forEach(function(field) {
+        field.disabled = true;
+       
+    });
+
+
+    editarBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        editarBtn.style.display = 'none';
+        guardarBtn.style.display = 'block';
+        aniadir_archivo.style.display = 'block';0.0
+
+        fields.forEach(function(field) {
+            field.disabled = false;
+        });
+    });
+
+   
+    
+
+
+
+form.addEventListener('submit', function() {   
+
+    var rhNegativoCheckbox = document.getElementById('id_rh_negativo');   
+    var rhNegativo = rhNegativoCheckbox.checked; 
+    console.log("Valor de rhNegativo:", rhNegativo);
+    if (rhNegativo) {
+        alert("¡Al tener Rh- debe ponerse la vacuna antiD!");
+    }
+     
+    try {
+        var testOSullivanPositivoCheckbox = document.getElementById('id_test_o_sullivan_positivo');
+        var testOSullivanPositivo = testOSullivanPositivoCheckbox.checked; 
+        console.log("Valor de testOSullivanPositivo:", testOSullivanPositivo);
+        if (testOSullivanPositivo) {
+            alert("Al dar positivo en el test de O'Sullivan (media curva) debe solicitar realizarse test de O'Sullivan (curva larga) .");
+        }
+    } catch (error) {
+        console.error("Error:", error);
+    }
+    
+   
+    guardarBtn.style.display = 'block';
+});
+
+
+});
+
+   
+</script>
+
+{% endblock %}

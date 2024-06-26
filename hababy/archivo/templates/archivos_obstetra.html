@@ -1,0 +1,259 @@
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  
+</head>
+
+{% extends 'base.html' %}
+
+{% block title %}Ver Archivos Obstetra{% endblock %}
+
+{% block content %}
+{% include 'menu.html' %}
+<div class="container d-flex justify-content-center" style="height: 100vh;">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                
+                <h2 class="text-center">Archivos de la Eco:</h2>
+                
+            </div>
+            <div class ="card-body"> 
+                {% if  trimestre == 1 %}
+                <form id="verArchivosObstetraForm" action="/gestion_citas/citas_primer/obstetra/archivos/" method="POST" class="d-flex flex-column align-items-center" enctype="multipart/form-data">
+                {% elif  trimestre == 2 %}
+                <form id="verArchivosObstetraForm" action="/gestion_citas/citas_segundo/obstetra/archivos/" method="POST" class="d-flex flex-column align-items-center" enctype="multipart/form-data">
+                {% elif  trimestre == 3 and orden == 1 %}
+                <form id="verArchivosObstetraForm" action="/gestion_citas/citas_tercer/obstetra/uno/archivos/" method="POST" class="d-flex flex-column align-items-center" enctype="multipart/form-data">
+                {% elif  trimestre == 3 and orden == 2 %}
+                <form id="verArchivosObstetraForm" action="/gestion_citas/citas_tercer/obstetra/dos/archivos/" method="POST" class="d-flex flex-column align-items-center" enctype="multipart/form-data">
+                {% elif  trimestre == 3 and orden == 3%}
+                <form id="verArchivosObstetraForm" action="/gestion_citas/citas_tercer/obstetra/tres/archivos/" method="POST" class="d-flex flex-column align-items-center" enctype="multipart/form-data">
+                {% endif %}
+                
+                {% csrf_token %}
+                <input type="hidden" id="id_cita_existente" value="{{ cita_existente.pk }}">
+                
+                <p>{{cita_existente.pk}}</p>
+                
+                <h3>Listado de archivos:</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nombre de archivo</th>
+                            <th id="accionVer">Ver</th>
+                            <th id="accionDescargar">Descargar</th>
+                            <th id="accionEliminar">Eliminar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for archivo in archivos_obstetra_existentes %}
+                        <tr>
+                            <td>{{ archivo.archivo }}</td>
+                            {% if trimestre == 1  %}
+                            <td class="icon-cell"><a href="/gestion_citas/citas_primer/obstetra/archivos/{{archivo.id}}" target="_blank"><i class="fas fa-eye icon"></i></a></td>
+                            <td class="icon-cell"><a href="/gestion_citas/citas_primer/obstetra/archivos/descargar/{{archivo.id}}"><i class="fas fa-download icon"></i></a></td>
+                            <td class="icon-cell"><a href="/gestion_citas/citas_primer/obstetra/archivos/eliminar/{{archivo.id}}"><i class="fas fa-trash-alt icon"></i></a></td>
+                            {% elif  trimestre == 2 %}
+                            <td class="icon-cell"><a href="/gestion_citas/citas_segundo/obstetra/archivos/{{archivo.id}}" target="_blank"><i class="fas fa-eye icon"></i></a></td>
+                            <td class="icon-cell"><a href="/gestion_citas/citas_segundo/obstetra/archivos/descargar/{{archivo.id}}"><i class="fas fa-download icon"></i></a></td>
+                            <td class="icon-cell"><a href="/gestion_citas/citas_segundo/obstetra/archivos/eliminar/{{archivo.id}}"><i class="fas fa-trash-alt icon"></i></a></td>
+                            {% elif  trimestre == 3 and orden == 1 %}
+                            <td class="icon-cell"><a href="/gestion_citas/citas_tercer/obstetra/uno/archivos/{{archivo.id}}" target="_blank"><i class="fas fa-eye icon"></i></a></td>
+                            <td class="icon-cell"><a href="/gestion_citas/citas_tercer/obstetra/uno/archivos/descargar/{{archivo.id}}"><i class="fas fa-download icon"></i></a></td>
+                            <td class="icon-cell"><a href="/gestion_citas/citas_tercer/obstetra/uno/archivos/eliminar/{{archivo.id}}"><i class="fas fa-trash-alt icon"></i></a></td>
+                            {% elif  trimestre == 3 and orden == 2 %}
+                            <td class="icon-cell"><a href="/gestion_citas/citas_tercer/obstetra/dos/archivos/{{archivo.id}}" target="_blank"><i class="fas fa-eye icon"></i></a></td>
+                            <td class="icon-cell"><a href="/gestion_citas/citas_tercer/obstetra/dos/archivos/descargar/{{archivo.id}}"><i class="fas fa-download icon"></i></a></td>
+                            <td class="icon-cell"><a href="/gestion_citas/citas_tercer/obstetra/dos/archivos/eliminar/{{archivo.id}}"><i class="fas fa-trash-alt icon"></i></a></td>
+                            {% elif  trimestre == 3 and orden == 3 %}
+                            <td class="icon-cell"><a href="/gestion_citas/citas_tercer/obstetra/tres/archivos/{{archivo.id}}" target="_blank"><i class="fas fa-eye icon"></i></a></td>
+                            <td class="icon-cell"><a href="/gestion_citas/citas_tercer/obstetra/tres/archivos/descargar/{{archivo.id}}"><i class="fas fa-download icon"></i></a></td>
+                            <td class="icon-cell"><a href="/gestion_citas/citas_tercer/obstetra/tres/archivos/eliminar/{{archivo.id}}"><i class="fas fa-trash-alt icon"></i></a></td>
+                            {% endif %}
+                        </tr>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                 
+                   
+                <div class="form-group w-100" id="aniadir_archivo" style="display: none;">
+                    <label for="archivo">Añadir archivo:</label>
+                    <input type="file" id="archivo" name="archivo">
+                </div>
+                <div class="button-container">
+                    {% if trimestre == 1  and archivos_obstetra_existentes %}
+                    <a href="/gestion_citas/citas_primer/obstetra/archivos/generar_pdf"  id="generarPdf" class="btn btn-primary">Generar PDF</a>
+                    {% elif  trimestre == 2  and archivos_obstetra_existentes %}
+                    <a href="/gestion_citas/citas_segundo/obstetra/archivos/generar_pdf"  id="generarPdf" class="btn btn-primary">Generar PDF</a>
+                    {% elif  trimestre == 3 and orden == 1  and archivos_obstetra_existentes %}
+                    <a href="/gestion_citas/citas_tercer/obstetra/uno/archivos/generar_pdf"  id="generarPdf" class="btn btn-primary">Generar PDF</a>
+                    {% elif  trimestre == 3 and orden == 2  and archivos_obstetra_existentes %}
+                    <a href="/gestion_citas/citas_tercer/obstetra/dos/archivos/generar_pdf"  id="generarPdf" class="btn btn-primary">Generar PDF</a>
+                    {% elif  trimestre == 3 and orden == 3  and archivos_obstetra_existentes %}
+                    <a href="/gestion_citas/citas_tercer/obstetra/tres/archivos/generar_pdf"  id="generarPdf" class="btn btn-primary">Generar PDF</a>
+                    {% endif %}
+                    
+                </div>
+
+                {% if cita_existente %}
+                <button id="editarBtn" class="btn btn-primary btn-block">Editar</button>
+                {% endif %}
+                <button type="submit"  id="guardarBtn" class="btn btn-primary btn-block" style="display: none;" >Guardar</button>
+                
+               
+                
+                
+            </form>
+           
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    console.log("DOMContentLoaded event fired");
+    var form = document.getElementById('verArchivosObstetraForm');
+    console.log("Formulario:", form);
+    var editarBtn = document.getElementById('editarBtn');
+    var guardarBtn = document.getElementById('guardarBtn');
+    var fields = form.querySelectorAll('input, textarea, select');
+    var aniadir_archivo=document.getElementById('aniadir_archivo')
+
+
+
+    fields.forEach(function(field) {
+        field.disabled = true;
+      
+    });
+
+
+    editarBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        editarBtn.style.display = 'none';
+        guardarBtn.style.display = 'block';
+        aniadir_archivo.style.display = 'block';
+        fields.forEach(function(field) {
+            field.disabled = false;
+        });
+    });
+
+   
+    
+
+
+
+form.addEventListener('submit', function() {   
+   // verArchivosBtn.style.display = 'block';
+    var rhNegativoCheckbox = document.getElementById('id_rh_negativo');   
+    var rhNegativo = rhNegativoCheckbox.checked; 
+    console.log("Valor de rhNegativo:", rhNegativo);
+    if (rhNegativo) {
+        alert("¡Al tener Rh- debe ponerse la vacuna antiD!");
+    }
+     
+    try {
+        var testOSullivanPositivoCheckbox = document.getElementById('id_test_o_sullivan_positivo');
+        var testOSullivanPositivo = testOSullivanPositivoCheckbox.checked; 
+        console.log("Valor de testOSullivanPositivo:", testOSullivanPositivo);
+        if (testOSullivanPositivo) {
+            alert("Al dar positivo en el test de O'Sullivan (media curva) debe solicitar realizarse test de O'Sullivan (curva larga) .");
+        }
+    } catch (error) {
+        console.error("Error:", error);
+    }
+    
+   
+    guardarBtn.style.display = 'block';
+});
+
+
+});
+
+   
+</script>
+<style>
+
+    .footer .footer-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .footer p {
+      margin-bottom: 10px;
+    }
+    
+    
+    
+    .footer {
+                width: 100%;
+                background-color: #f8f9fa;
+                padding: 20px 0;
+                border-top: 1px solid #e9ecef;
+                text-align: center;
+                margin-top: 90px;
+            }
+    
+    .footer .nav {
+                justify-content: center; 
+            }
+    
+    .footer .nav .nav-item {
+      margin-right: 10px;
+    }
+    
+    .footer .nav .nav-item:last-child {
+      margin-right: 0;
+    }
+    
+    .footer .nav .nav-link {
+      color: #495057;
+      font-weight: 500;
+    }
+    
+    .footer .nav .nav-link:hover {
+      color: #007bff;
+    }
+            .error-message {
+                color: red;
+                font-size: 12px;
+                margin-top: 5px;
+                display: block;
+            }
+        
+            .hidden {
+                display: none; 
+            }
+        
+            table {
+                border-collapse: collapse;
+                width: 100%;
+                margin-top: 20px; 
+                margin-bottom: 20px; 
+            }
+        
+            table th, table td {
+                border: 1px solid #dddddd; 
+                text-align: left;
+                padding: 8px;
+            }
+            table th {
+                background-color: #f2f2f2; 
+            }
+            #accionVer, #accionDescargar, #accionEliminar {
+                text-align: center; 
+              
+            }
+            .button-container {
+                text-align: right;
+                margin-bottom: 20px; 
+            }
+            .icon-cell {
+                text-align: center; 
+            }
+            .icon {
+                margin-right: 5px; 
+            }
+        </style>
+{% endblock %}

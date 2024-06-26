@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}Archivo guardado{% endblock %}
+
+{% block content %}
+{% include 'menu.html' %}
+<div class="container d-flex justify-content-center  " style="height: 100vh;">
+    <div class="col-md-6">
+
+   
+    <div class="text-center">
+        <h2>¡Archivo guardado con éxito!</h2>
+        {% if tipo == 'curva_larga' %}
+        <a href="/gestion_citas/citas_segundo/extracciones/test_o_sullivan_curva_larga/archivos"  id= "verArchivosBtn" class="btn btn-primary btn-block">Volver al listado de archivos</a>
+        {% elif trimestre == 1 and tipo == 'extracciones' %}
+        <a href="/gestion_citas/citas_primer/extracciones/archivos"  id= "verArchivosBtn" class="btn btn-primary btn-block">Volver al listado de archivos</a>
+        {% elif  trimestre == 2 and tipo == 'extracciones' %}
+        <a href="/gestion_citas/citas_segundo/extracciones/archivos"  id= "verArchivosBtn" class="btn btn-primary btn-block">Volver al listado de archivos</a>
+        {% elif  trimestre == 3 and tipo == 'extracciones' %}
+        <a href="/gestion_citas/citas_tercer/extracciones/archivos"  id= "verArchivosBtn" class="btn btn-primary btn-block">Volver al listado de archivos</a>
+        {% elif trimestre == 1 and tipo == 'obstetra' %}
+        <a href="/gestion_citas/citas_primer/obstetra/archivos"  id= "verArchivosBtn" class="btn btn-primary btn-block">Volver al listado de archivos</a>
+        {% elif trimestre == 2 and tipo == 'obstetra' %}
+        <a href="/gestion_citas/citas_segundo/obstetra/archivos"  id= "verArchivosBtn" class="btn btn-primary btn-block">Volver al listado de archivos</a>
+        {% elif trimestre == 3 and  orden == 1 and tipo == 'obstetra' %}
+        <a href="/gestion_citas/citas_tercer/obstetra/uno/archivos"  id= "verArchivosBtn" class="btn btn-primary btn-block">Volver al listado de archivos</a>
+        {% elif trimestre == 3 and  orden == 2 and tipo == 'obstetra' %}
+        <a href="/gestion_citas/citas_tercer/obstetra/dos/archivos"  id= "verArchivosBtn" class="btn btn-primary btn-block">Volver al listado de archivos</a>
+        {% elif trimestre == 3 and orden == 3 and tipo == 'obstetra' %}
+        <a href="/gestion_citas/citas_tercer/obstetra/tres/archivos"  id= "verArchivosBtn" class="btn btn-primary btn-block">Volver al listado de archivos</a>
+        {% endif %}
+    </div>
+</div>
+</div>
+{% include 'footer.html' %}
+{% endblock %}
