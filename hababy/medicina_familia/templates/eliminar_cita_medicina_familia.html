@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}Eliminar Cita de Medicina de Familia{% endblock %}
+
+{% block content %}
+{% include 'menu.html' %}
+<div class="container d-flex justify-content-center" style="height: 100vh;">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="text-center">Eliminar Cita de Medicina de Familia</h2>
+            </div>
+            <div class ="card-body"> 
+                {% if trimestre == 1 %}
+                <form action="#" method="POST" class="d-flex flex-column align-items-center" >
+                {% elif trimestre == 2 %}
+                <form  action="#" method="POST" class="d-flex flex-column align-items-center" >
+                {% elif trimestre == 3 %}
+                <form  action="#" method="POST" class="d-flex flex-column align-items-center" >
+                {% endif %}
+                    {% csrf_token %}
+                    <p>¿Estás seguro de que deseas eliminar esta cita de Medicina de Familia?</p>
+                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                   
+                    {% if trimestre == 1 and tipo == 'acido_folico' %}
+                    <a href="/gestion_citas/citas_primer/medicina_familia/acido_folico/" class="btn btn-secondary">Cancelar</a>
+                    {% elif trimestre == 1 and tipo == 'hierro' %}
+                    <a href="/gestion_citas/citas_primer/medicina_familia/hierro/" class="btn btn-secondary">Cancelar</a>
+                    {% elif trimestre == 2 %}
+                    <a href="/gestion_citas/citas_segundo/medicina_familia/hierro/" class="btn btn-secondary">Cancelar</a>
+                    {% elif trimestre == 3 %}
+                    <a href="/gestion_citas/citas_tercer/medicina_familia/hierro/" class="btn btn-secondary">Cancelar</a>
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% include 'footer.html' %}
+{% endblock %}

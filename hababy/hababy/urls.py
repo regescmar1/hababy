@@ -69,7 +69,9 @@ urlpatterns = [
     path('gestion_citas/citas_segundo/extracciones/test_o_sullivan_curva_larga/archivos/eliminar/{{archivo.id}}',include('archivo.urls')),
     path('gestion_citas/citas_segundo/extracciones/test_o_sullivan_curva_larga/archivos/generar_pdf/',include('archivo.urls')),
 
-
+    path('gestion_citas/citas_primer/medicina_familia/',include('medicina_familia.urls')),
+    path('gestion_citas/citas_segundo/medicina_familia/',include('medicina_familia.urls')),
+    path('gestion_citas/citas_tercer/medicina_familia/',include('medicina_familia.urls')),
 
 
 ]
