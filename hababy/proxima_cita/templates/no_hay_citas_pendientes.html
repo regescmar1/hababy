@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Proxima cita{% endblock %}
+
+{% block content %}
+{% include 'menu.html' %}
+<div class="container d-flex justify-content-center " style="height: 100vh;">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="text-center">Próxima cita:</h2>
+            </div>
+            <div class ="card-body"> 
+                <form class="d-flex flex-column align-items-center">
+                    <p>No tiene citas pendientes.</p>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% include 'footer.html' %}
+{% endblock %}

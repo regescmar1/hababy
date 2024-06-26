@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}Proxima cita{% endblock %}
+
+{% block content %}
+{% include 'menu.html' %}
+<div class="container d-flex justify-content-center " style="height: 100vh;">
+
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="text-center">Próxima cita:</h2>
+            </div>
+            <div class ="card-body"> 
+                <form class="d-flex flex-column align-items-center">
+                    <div class="form-group w-100">
+                        <label for="fecha_proxima_cita">Fecha:</label>
+                        <strong>{{fecha}}</strong>
+                    </div>
+                    <div class="form-group w-100">
+                        <label for="especialista">Especialista:</label>         
+                        <strong>{{especialista}}</strong>
+                    </div>
+                    </div>
+                    <a href="{{url_proxima_cita}}" class="btn btn-primary btn-block">Acceder a la proxima cita</a>
+                </form>
+            </div>
+    </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+{% block footer %}
+{% include 'footer.html' %}
+{% endblock %}
