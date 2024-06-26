@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}Citas Primer Trimestre{% endblock %}
+
+{% block content %}
+{% include 'menu.html' %}
+<div class="container d-flex justify-content-center " style="height: 100vh;">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="text-center">Citas Primer Trimestre:</h2>
+            </div>
+            <div class ="card-body"> 
+                <a href="matrona" class="btn btn-primary btn-block">Matrona</a>
+                <a href="medicina_familia/acido_folico/" class="btn btn-primary btn-block">Medicina de Familia - Receta ácido fólico</a>
+                <a href="extracciones" class="btn btn-primary btn-block">Extracciones</a>
+                <a href="odontologia" class="btn btn-primary btn-block">Odontología</a>
+                <a href="obstetra" class="btn btn-primary btn-block">Obstetra</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% include 'footer.html' %}
+{% endblock %}
