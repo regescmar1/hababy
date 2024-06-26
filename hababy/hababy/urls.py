@@ -30,6 +30,7 @@ urlpatterns = [
     path('oauth/', include('social_django.urls', namespace='social')),
     path('autenticacion/', include('autenticacion.urls')), 
     path('educacion_maternal/',include('educacion_maternal.urls')),
+    path('consejos/',include('consejos.urls')),
     
 ]
 

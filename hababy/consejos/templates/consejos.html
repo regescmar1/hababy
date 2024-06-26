@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% block title %}Consejos{% endblock %}
+{% block content %}
+{% include 'menu.html' %}
+<div class="container d-flex justify-content-center" style="min-height: 70vh; margin-bottom: 50px;">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="text-center">Consejos:</h2>
+            </div>
+            <div class ="card-body"> 
+                <div class="row justify-content-center">
+                    <div class="col-md-4 mx-auto">
+                        <a href="/consejos/nauseas/">
+                            <img src="\static\images\nauseas.png" title="Nauseas" alt="Nauseas" width="150px" height="180px" >
+                        </a>
+                    </div>
+                    <div class="col-md-4 mx-auto">
+                        <a href="/consejos/ejercicios/">
+                            <img src="\static\images\ejercicios.jpg"  title="Ejercicios" alt="Ejercicios" class="img-fluid">
+                        </a>
+                    </div>
+                    <div class="col-md-4 mx-auto">
+                        <a href="/consejos/nutricion/">
+                            <img src="\static\images\nutricion.png"  title="Nutrición" alt="Nutrición" class="img-fluid">
+                        </a>
+                    </div>
+                   
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-md-4 mx-auto">
+                        <a href="/consejos/lactancia/">
+                            <img src="\static\images\lactancia.jpg" title="Lactancia" alt="Lactancia" class="img-fluid">
+                        </a>
+                    </div>
+                    <div class="col-md-4 mx-auto">
+                        <a href="/consejos/bolso_hospital/">
+                            <img src="\static\images\bolso_hospital.png" title="Bolso hospital" alt="Bolso hospital" class="img-fluid">
+                        </a>
+                    </div>
+                    <div class="col-md-4 mx-auto">
+                        <a href="/consejos/contracciones/">
+                            <img src="\static\images\contracciones.jpg" title="Contracciones" alt="Contracciones" class="img-fluid">
+                        </a>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-md-4 mx-auto">
+                        <a href="/consejos/induccion_al_parto/">
+                            <img src="\static\images\induccion_al_parto.jpg" title="Inducción al parto" alt="Inducción al parto" class="img-fluid">
+                        </a>
+                    </div>
+                    <div class="col-md-4 mx-auto">
+                        <a href="/consejos/cordon_umbilical/">
+                            <img src="\static\images\cordon_umbilical.jpg" title="Cordón umbilical" alt="Cordón umbilical" class="img-fluid">
+                        </a>
+                    </div>
+                    <div class="col-md-4 mx-auto">
+                        <a href="/consejos/suelo_pelvico/">
+                            <img src="\static\images\suelo_pelvico.png" title="Suelo pélvico" alt="Suelo pélvico" class="img-fluid">
+                        </a>
+                    </div>
+                </div>
+            <div>Si necesita mas información en esta <a href="https://enfamilia.aeped.es/sites/enfamilia.aeped.es/files/guia_practica_padres_aep_1.pdf">Guía práctica para padres</a> se tratan más temas que le podrán resultar de interés.</div>
+            </div>
+        </div>
+    </div>
+</div>
+{% include 'footer.html' %}
+{% endblock %}
+
+<style>
+    .img-custom {
+        width: 200px;
+        height: 300px;
+}
+</style>
