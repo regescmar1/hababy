@@ -47,11 +47,30 @@ urlpatterns = [
     path('gestion_citas/citas_segundo/obstetra/', include('obstetra.urls')),
     path('gestion_citas/citas_tercer/obstetra/', include('obstetra.urls')),
 
+    path('gestion_citas/citas_primer/obstetra/archivos/',include('archivo.urls')),
+    path('gestion_citas/citas_segundo/obstetra/archivos/',include('archivo.urls')),
+    path('gestion_citas/citas_tercer/obstetra/uno/archivos/',include('archivo.urls')),
+    path('gestion_citas/citas_tercer/obstetra/dos/archivos/',include('archivo.urls')),
+    path('gestion_citas/citas_tercer/obstetra/tres/archivos/',include('archivo.urls')),
+    
     path('vacunas/',include('vacuna.urls')),
 
     path('gestion_citas/citas_primer/extracciones/',include('extracciones.urls')),
     path('gestion_citas/citas_segundo/extracciones/',include('extracciones.urls')),
     path('gestion_citas/citas_tercer/extracciones/',include('extracciones.urls')),
+    
+    path('gestion_citas/citas_primer/extracciones/archivos/',include('archivo.urls')),
+    path('gestion_citas/citas_segundo/extracciones/archivos/',include('archivo.urls')),
+    path('gestion_citas/citas_tercer/extracciones/archivos/',include('archivo.urls')),
+
+    path('gestion_citas/citas_segundo/extracciones/test_o_sullivan_curva_larga/archivos/',include('archivo.urls')),
+    path('gestion_citas/citas_segundo/extracciones/test_o_sullivan_curva_larga/archivos/{{archivo.id}}',include('archivo.urls')),
+    path('gestion_citas/citas_segundo/extracciones/test_o_sullivan_curva_larga/archivos/descargar/{{archivo.id}}',include('archivo.urls')),
+    path('gestion_citas/citas_segundo/extracciones/test_o_sullivan_curva_larga/archivos/eliminar/{{archivo.id}}',include('archivo.urls')),
+    path('gestion_citas/citas_segundo/extracciones/test_o_sullivan_curva_larga/archivos/generar_pdf/',include('archivo.urls')),
+
+
+
 
 ]
 
