@@ -27,15 +27,27 @@ urlpatterns = [
     path('acerca_de/', hababy_views.acerca_de,name="acerca_de"),
     path('contacto/', hababy_views.contacto,name="contacto"),
     path('politica_privacidad/', hababy_views.politica_privacidad,name="politica_privacidad"),
+
     path('oauth/', include('social_django.urls', namespace='social')),
     path('autenticacion/', include('autenticacion.urls')), 
+
     path('educacion_maternal/',include('educacion_maternal.urls')),
+
     path('consejos/',include('consejos.urls')),
+
     path('gestion_citas/',include('gestion_citas.urls')),
+
     path('gestion_citas/citas_primer/odontologia/',include('odontologia.urls')),
+
     path('gestion_citas/citas_primer/matrona/', include('matrona.urls')),
     path('gestion_citas/citas_segundo/matrona/', include('matrona.urls')),
     path('gestion_citas/citas_tercer/matrona/', include('matrona.urls')),
+
+    path('gestion_citas/citas_primer/obstetra/', include('obstetra.urls')),
+    path('gestion_citas/citas_segundo/obstetra/', include('obstetra.urls')),
+    path('gestion_citas/citas_tercer/obstetra/', include('obstetra.urls')),
+
+
 
 ]
 
