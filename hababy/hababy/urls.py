@@ -49,6 +49,10 @@ urlpatterns = [
 
     path('vacunas/',include('vacuna.urls')),
 
+    path('gestion_citas/citas_primer/extracciones/',include('extracciones.urls')),
+    path('gestion_citas/citas_segundo/extracciones/',include('extracciones.urls')),
+    path('gestion_citas/citas_tercer/extracciones/',include('extracciones.urls')),
+
 ]
 
 if settings.DEBUG:
