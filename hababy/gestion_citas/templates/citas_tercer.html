@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}Citas Tercer Trimestre{% endblock %}
+
+{% block content %}
+{% include 'menu.html' %}
+<div class="container d-flex justify-content-center" style="height: 100vh;">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="text-center">Citas Tercer Trimestre:</h2>
+            </div>
+            <div class ="card-body"> 
+                <a href="matrona/uno" class="btn btn-primary btn-block">Matrona</a>
+                <a href="obstetra/uno" class="btn btn-primary btn-block">Obstetra</a>
+                <a href="matrona/dos" class="btn btn-primary btn-block">Matrona</a>
+                <a href="extracciones" class="btn btn-primary btn-block">Extracciones</a>
+
+                <a href="obstetra/dos" class="btn btn-primary btn-block">Obstetra (39 semanas)</a>
+                <a href="obstetra/tres" class="btn btn-primary btn-block">Obstetra (40 semanas)</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% include 'footer.html' %}
+{% endblock %}

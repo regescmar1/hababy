@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Gestion de citas:{% endblock %}
+
+{% block content %}
+{% include 'menu.html' %}
+<div class="container d-flex justify-content-center " style="height: 100vh;">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="text-center">Citas:</h2>
+            </div>
+            <div class ="card-body"> 
+                <a href="citas_primer" class="btn btn-primary btn-block">Primer Trimestre</a>
+                <a href="citas_segundo" class="btn btn-primary btn-block">Segundo Trimestre</a>
+                <a href="citas_tercer" class="btn btn-primary btn-block">Tercer Trimestre</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% include 'footer.html' %}
+{% endblock %}
