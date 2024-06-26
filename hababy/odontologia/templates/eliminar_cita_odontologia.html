@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}Eliminar Cita de Odontología{% endblock %}
+
+{% block content %}
+{% include 'menu.html' %}
+<div class="container d-flex justify-content-center" style="height: 100vh;">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="text-center">Eliminar Cita de Odontología</h2>
+            </div>
+            <div class ="card-body"> 
+                <form action="#" method="POST">
+                    {% csrf_token %}
+                    <p>¿Estás seguro de que deseas eliminar esta cita de odontología?</p>
+                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                    <a href="/gestion_citas/citas_primer/odontologia/" class="btn btn-secondary">Cancelar</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% include 'footer.html' %}
+{% endblock %}
