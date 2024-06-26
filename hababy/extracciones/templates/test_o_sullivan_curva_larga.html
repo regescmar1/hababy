@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+{% block title %}Curva Larga{% endblock %}
+{% block content %}
+{% include 'menu.html' %}
+<div class="container d-flex justify-content-center" style="height: 100vh;">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="text-center">Curva Larga:</h2>
+            </div>
+            <div class ="card-body"> 
+                <form id="curvaLargaForm" action="/gestion_citas/citas_segundo/extracciones/test_o_sullivan_curva_larga/" method="POST" class="d-flex flex-column align-items-center" >
+                    {% csrf_token %}
+                    <div class="form-group w-100">
+                        <label for="fecha">Fecha:</label>   
+                        {{form.fecha}}
+                    </div>
+
+                    <div class="form-group w-100">
+                        <label for="analisis_normal">Analisis normal:</label> 
+                        {{form.analisis_normal}}
+                        {% for error in form.analisis_normal.errors %}
+                                <span class="error-message">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+
+                    <div class="form-group w-100">
+                        <label for="observaciones">Observaciones:</label> 
+                    </div>
+                    <div class="col-md-12">
+                        {{form.observaciones}}
+                        {% for error in form.observaciones.errors %}
+                                <span class="error-message">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    
+                    
+                    
+                    <div class="form-group w-100">
+                        
+                        <a href="/gestion_citas/citas_segundo/extracciones/test_o_sullivan_curva_larga/archivos" id= "verArchivosBtn" class="btn btn-primary btn-block">Ver Archivos del Análisis</a>
+                       
+                    </div>
+                
+                   
+                    
+                    <button id="editarBtn" class="btn btn-primary btn-block">Editar</button>
+                    
+                    <a href="/gestion_citas/citas_segundo/extracciones/test_o_sullivan_curva_larga/eliminar_cita_test_o_sullivan_curva_larga/" id= "eliminarBtn" class="btn btn-danger btn-block">Eliminar</a>
+                    
+                
+                    <button type="submit"  id="guardarBtn" class="btn btn-primary btn-block" style="display: none;" >Guardar</button>
+                    
+                    
+                </form>
+               
+            </div>
+        </div>
+    </div>
+</div>
+{% include 'footer.html' %}
+<script>
+ 
+
+    document.addEventListener('DOMContentLoaded', function() {
+        var form = document.getElementById('curvaLargaForm');
+        var editarBtn = document.getElementById('editarBtn');
+        var guardarBtn = document.getElementById('guardarBtn');
+        var id_cita_existente=document.getElementById('id_cita_existente');
+        var fields = form.querySelectorAll('input, textarea, select');
+        var verArchivosBtn = document.getElementById('verArchivosBtn');
+
+        fields.forEach(function(field) {
+            field.disabled = true;
+            eliminarBtn.style.display='none';
+        });
+
+        editarBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            editarBtn.style.display = 'none';
+            guardarBtn.style.display = 'block';
+            eliminarBtn.style.display='block';
+       
+            fields.forEach(function(field) {
+                field.disabled = false;
+            });
+        });
+
+       
+        
+
+
+
+    form.addEventListener('submit', function() {   
+
+
+
+         
+        if (id_cita_existente){
+            verArchivosBtn.style.display = 'block';
+        }
+        try {
+            var testOSullivanPositivoCheckbox = document.getElementById('id_test_o_sullivan_positivo');
+            var testOSullivanPositivo = testOSullivanPositivoCheckbox.checked; 
+            console.log("Valor de testOSullivanPositivo:", testOSullivanPositivo);
+            if (testOSullivanPositivo) {
+                alert("Al dar positivo en el test de O'Sullivan (media curva) debe solicitar realizarse test de O'Sullivan (curva larga) .");
+            }
+        } catch (error) {
+            console.error("Error:", error);
+        }
+        
+       
+        guardarBtn.style.display = 'block';
+    });
+
+
+});
+
+
+</script>
+<style>
+    .error-message {
+        color: red;
+        font-size: 12px;
+        margin-top: 5px;
+        display: block;
+    }
+
+    .hidden {
+        display: none; 
+    }
+</style>
+{% endblock %}
