@@ -73,7 +73,7 @@ urlpatterns = [
     path('gestion_citas/citas_segundo/medicina_familia/',include('medicina_familia.urls')),
     path('gestion_citas/citas_tercer/medicina_familia/',include('medicina_familia.urls')),
 
-
+    path('proxima_cita/',include('proxima_cita.urls')),
 ]
 
 if settings.DEBUG:
