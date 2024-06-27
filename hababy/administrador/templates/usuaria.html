@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% block title %}Usuaria{% endblock %}
+{% block content %}
+{% include 'menu_admin.html' %}
+<div class="container d-flex justify-content-center" style="height: 100vh;">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="text-center"> {{form.username.value}}</h2>
+            </div>
+            <div class ="card-body"> 
+                <form id="perfilUsuariaForm" action="#" method="POST" class="d-flex flex-column align-items-center" >
+                
+                
+                    {% csrf_token %}
+                    {{ form.as_p }}
+
+                    <button id="editarBtn" class="btn btn-primary btn-block">Editar</button>
+                   
+                    <a href="/administrador/gestion_usuarias/usuaria/{{usuaria_id}}/eliminar/" id= "eliminarBtn" class="btn btn-danger btn-block">Eliminar</a>
+                    
+                
+                
+                    <button type="submit"  id="guardarBtn" class="btn btn-primary btn-block" style="display: none;" >Guardar</button>
+                    
+                    
+                </form>
+               
+            </div>
+        </div>
+    </div>
+</div>
+{% include 'footer.html' %}
+<script>
+ 
+   
+   
+    document.addEventListener('DOMContentLoaded', function() {
+        var form = document.getElementById('perfilUsuariaForm');
+        var editarBtn = document.getElementById('editarBtn');
+        var guardarBtn = document.getElementById('guardarBtn');
+        var fields = form.querySelectorAll('input, textarea, select');
+       
+
+        fields.forEach(function(field) {
+            field.disabled = true;
+            eliminarBtn.style.display='none';
+        });
+
+
+        editarBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            editarBtn.style.display = 'none';
+            guardarBtn.style.display = 'block';
+            eliminarBtn.style.display='block';
+   
+            fields.forEach(function(field) {
+                field.disabled = false;
+            });
+        });
+
+        
+
+
+
+        form.addEventListener('submit', function() {
+
+        guardarBtn.style.display = 'block';
+    });
+    });
+</script>
+<style>
+    .error-message {
+        color: red;
+        font-size: 12px;
+        margin-top: 5px;
+        display: block;
+    }
+
+    .hidden {
+        display: none; 
+    }
+</style>
+{% endblock %}

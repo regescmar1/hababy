@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gráfico de Citas</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        #chartContainer{
+            border: 1px solid #ccc; 
+            padding: 10px; 
+            flex: 1; 
+            margin-right: 40px;
+        }
+        #estadisticasContainer {
+            border: 1px solid #ccc; 
+            padding: 10px; 
+            flex: 1; 
+            
+        }
+        table{
+            text-align: center;
+            border-collapse: collapse;
+            
+        }
+        th, td {
+            border: 1px solid black; 
+            padding: 10px;
+        }
+    </style>
+</head>
+{% extends 'base.html' %}
+{% block title %}Citas{% endblock %}
+{% block content %}
+{% include 'menu_admin.html' %}
+<body>
+    <div style="display: flex;">
+        <div id="chartContainer">
+            <h1 style="text-align: center;">Gráfico de Citas</h1>
+            <canvas id="citasChart" width="20" height="10"></canvas>
+        </div>
+        
+        <div id="estadisticasContainer" style="display: flex;">
+            
+            
+            <div style="width: 50%;">
+
+                <table style="width: 90%; border-collapse: collapse;">
+                    <tr>
+                        <th>Usuaria</th>
+                        <th>Número de citas</th>
+                    </tr>
+                    {% for usuaria, total_citas in usuarias_dict.items %}
+                    <tr>
+                        <td>{{ usuaria }}</td>
+                        <td>{{ total_citas }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+    
+            <div style="width: 50%;">
+                
+                <table style="width: 90%; border-collapse: collapse; ">
+                    <tr>
+                        <td><strong>Media</strong></td>
+                        <td>{{ media}}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Max. num. citas</strong></td>
+                        <td>{{ max}}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Min. num. citas</strong></td>
+                        <td>{{ min}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+</body>
+</html>
+
+
+
+    <script>
+
+        var citasData = {
+    'Curva Larga': '{{ citas_curva_larga }}',
+    'Extracciones': '{{ citas_extracciones }}',
+    'Matrona': '{{ citas_matrona }}',
+    'Medicina de Familia': '{{ citas_medicina_familia }}',
+    'Obstetra': '{{ citas_obstetra }}',
+    'Odontología': '{{ citas_odontologia }}',
+    'Vacuna': '{{ citas_vacuna }}'
+};
+
+
+
+        var ctx = document.getElementById('citasChart').getContext('2d');
+        var citasChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: Object.keys(citasData),
+                datasets: [{
+                    label: 'Número de Citas',
+                    data: Object.values(citasData),
+                    backgroundColor: 'rgba(0, 0, 255, 0.2)', 
+                    borderColor: 'rgba(0, 0, 255, 1)', 
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            precision: 0 
+                        } 
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
+{% include 'footer.html' %}
+{% endblock %}

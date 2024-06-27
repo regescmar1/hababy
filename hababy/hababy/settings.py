@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'archivo',
     'medicina_familia',
     'proxima_cita',
+    'administrador',
 ]
 
 AUTHENTICATION_BACKENDS = [
@@ -110,7 +111,7 @@ ROOT_URLCONF = 'hababy.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'autenticacion','consejos','educacion_maternal','gestion_citas','odontologia','matrona','obstetra','vacuna','extracciones','archivo','medicina_familia','proxima_cita','hababy_app','templates'),],
+        'DIRS': [os.path.join(BASE_DIR, 'autenticacion','consejos','educacion_maternal','gestion_citas','odontologia','matrona','obstetra','vacuna','extracciones','archivo','medicina_familia','proxima_cita','administrador','hababy_app','templates'),],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

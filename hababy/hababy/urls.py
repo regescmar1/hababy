@@ -74,6 +74,8 @@ urlpatterns = [
     path('gestion_citas/citas_tercer/medicina_familia/',include('medicina_familia.urls')),
 
     path('proxima_cita/',include('proxima_cita.urls')),
+
+    path('administrador/',include('administrador.urls')),
 ]
 
 if settings.DEBUG:
