@@ -1,0 +1,40 @@
+<div>
+  <img src="\static\images\logo2.png" alt="hababy imagen" style="width: 200px; height: auto;" /> 
+</div>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                  <a class="nav-link" href="/administrador/gestion_usuarias">Gestión de Usuarias</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="/administrador/citas">Gestión de Citas</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="/administrador/gestion_extracciones">Gestión de Extracciones</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="/administrador/gestion_vacunas">Gestión de Vacunas</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="/administrador/gestion_odontologia">Odontología</a>
+              </li>
+           
+          </ul>
+          <ul class="navbar-nav" style="margin-left: auto;">
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'logout_usuaria' %}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                Cerrar sesión
+            </a>
+            <form id="logout-form" action="{% url 'logout_usuaria' %}" method="POST" style="display: none;">
+              {% csrf_token %}
+          </form>
+            </li>
+        </ul>
+      </div>
+  </div>
+</nav>

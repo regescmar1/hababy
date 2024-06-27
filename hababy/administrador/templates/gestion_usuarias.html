@@ -1,0 +1,117 @@
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        .error-message {
+            color: red;
+            font-size: 12px;
+            margin-top: 5px;
+            display: block;
+        }
+    
+        .hidden {
+            display: none; 
+        }
+    
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px; 
+            margin-bottom: 20px; 
+        }
+    
+        table th, table td {
+            border: 1px solid #dddddd; 
+            text-align: left;
+            padding: 8px;
+        }
+        table th {
+            background-color: #f2f2f2; 
+        }
+        #accionVer, #accionDescargar, #accionEliminar {
+            text-align: center; 
+          
+        }
+        .button-container {
+            text-align: right;
+            margin-bottom: 20px; 
+        }
+        .icon-cell {
+            text-align: center; 
+        }
+        .icon {
+            margin-right: 5px; 
+        }
+    </style>
+</head>
+<body>
+{% extends 'base.html' %}
+{% block title %}Gestión de Usuarias{% endblock %}
+{% block content %}
+
+{% include 'menu_admin.html' %}
+<div class="container d-flex justify-content-center" style="height: 100vh;">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="text-center">Gestión de Usuarias:</h2>
+            </div>
+            <div class="card-body"> 
+                <form id="usuariasForm" action="administrador/gestion_usuarias/" method="POST" class="d-flex flex-column align-items-center" enctype="multipart/form-data"></form>
+                {% csrf_token %}
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Listado de usuarias:</th>
+                                                   
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for usuaria in usuarias %}
+                        <tr>
+                            <td><a href="/administrador/gestion_usuarias/usuaria/{{usuaria.id}}/" >{{ usuaria.id }} - {{usuaria.username}}</a></td>
+                           
+                          
+                        </tr>
+
+
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+               
+                <a href="/administrador/gestion_usuarias/usuaria/crear/"  id="crearUsuaria" class="btn btn-primary btn-block">Crear Usuaria</a>
+             
+               
+                
+               
+            </div>    
+        </div>
+    </div>
+</div>
+{% include 'footer.html' %}
+</body>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var form = document.getElementById('usuariasForm');
+   
+    var fields = form.querySelectorAll('input, textarea, select');
+    var aniadir_sesion=document.getElementById('crearUsuaria')
+
+
+
+    fields.forEach(function(field) {
+        field.disabled = true;
+        
+    });
+
+
+
+
+});
+
+   
+</script>
+
+
+
+{% endblock %}

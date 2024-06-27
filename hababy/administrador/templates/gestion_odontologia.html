@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Odontologia</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        #chartContainer{
+            border: 1px solid #ccc; 
+            padding: 10px; 
+
+            margin-right: 40px;
+        }
+
+        table{
+            text-align: center;
+            border-collapse: collapse;
+            
+        }
+        th, td {
+            border: 1px solid black; 
+            padding: 10px;
+        }
+    </style>
+</head>
+{% extends 'base.html' %}
+{% block title %}Odontologia{% endblock %}
+{% block content %}
+{% include 'menu_admin.html' %}
+<body>
+    <div style="display: flex;">
+        <div id="chartContainer">
+            <h1 style="text-align: center;">Odontologia</h1>
+            <canvas id="citasChart" width="1000" height="500" ></canvas>
+        </div>
+        
+      
+    </div>
+    
+</body>
+</html>
+
+
+
+    <script>
+
+        var citasData = {
+    'Si': '{{ limpieza_si }}',
+    'No': '{{ limpieza_no }}',
+
+
+    
+};
+
+
+
+        var ctx = document.getElementById('citasChart').getContext('2d');
+        var citasChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: Object.keys(citasData),
+                datasets: [{
+                    label: 'Número limpiezas',
+                    data: Object.values(citasData),
+                    backgroundColor: 'rgba(0, 0, 255, 0.2)', 
+                    borderColor: 'rgba(0, 0, 255, 1)', 
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            precision: 0 
+                        } 
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
+{% include 'footer.html' %}
+{% endblock %}
