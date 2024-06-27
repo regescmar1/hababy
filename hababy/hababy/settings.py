@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'hababy_app',
     'autenticacion',
     'social_django',
+    'consejos',
     'educacion_maternal',
     'gestion_citas',
     'odontologia',
