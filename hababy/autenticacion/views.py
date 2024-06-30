@@ -1,8 +1,5 @@
-from django.shortcuts import render
-
 # Create your views here.
-import os
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
 from django.shortcuts import render,redirect
 from django.contrib.auth import update_session_auth_hash
@@ -11,39 +8,19 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.urls import reverse
-import os
 from django.core.mail import send_mail
 from django.conf import settings
-
 from autenticacion.forms.forms import    ModificarContraseniaForm, OlvidoContraseniaForm,UsuariaLoginForm,RegistroForm,MiPerfilForm
 import braintree
 from django.core.exceptions import ObjectDoesNotExist
 import random
-from django.http import JsonResponse
-
-
-import random
 import json
-
-import json
-from django.http import JsonResponse
-from django.shortcuts import redirect
-from django.contrib.auth.models import User
-
-
 import logging
-
 from autenticacion.models import EstadoPago
-
 logging.basicConfig(level=logging.DEBUG)
-
-
-
 
 def login_incorrecto(request):
     return render(request, 'login_incorrecto.html')
-
-
 
 def login_usuaria(request):
     if request.method == 'POST':
@@ -60,7 +37,7 @@ def login_usuaria(request):
                 login(request, user)
                 if request.user.is_staff:
                     return redirect ('/administrador/')
-                else:    
+                else:
                     return redirect('/autenticacion/login_completado/')
             else:
                 print("Autenticación fallida: Usuario o contraseña incorrectos")
@@ -124,8 +101,7 @@ def registro(request):
             codigo_confirmacion = ''.join(random.choices('0123456789', k=6))
             request.session['codigo_confirmacion'] = codigo_confirmacion
             enviar_correo_confirmacion(form.cleaned_data['email'], codigo_confirmacion)
-            request.session['registro_data']= form.cleaned_data    
-            
+            request.session['registro_data']= form.cleaned_data
             return redirect('verificar_codigo_para_correo')
     else:
         form = RegistroForm()
@@ -247,9 +223,8 @@ def olvido_contrasenia(request):
             codigo_confirmacion = ''.join(random.choices('0123456789', k=6))
             request.session['codigo_confirmacion'] = codigo_confirmacion
             enviar_correo_confirmacion(form.cleaned_data['email'], codigo_confirmacion)
-            request.session['registro_data']= form.cleaned_data  
-            request.session['email_olvido']=form.cleaned_data['email']  
-            
+            request.session['registro_data']= form.cleaned_data
+            request.session['email_olvido']=form.cleaned_data['email']        
             return redirect('verificar_codigo_para_contrasenia')
     else:
         form = OlvidoContraseniaForm()
@@ -286,7 +261,7 @@ def modificar_contrasenia(request):
                 print('usuario',user)
                 update_session_auth_hash(request, user)
             messages.success(request, 'Tu contraseña ha sido actualizada exitosamente.')
-            return redirect('/autenticacion/login_usuaria/')       
+            return redirect('/autenticacion/login_usuaria/')
     else:
       
         form = ModificarContraseniaForm()
@@ -320,9 +295,9 @@ def braintree_social(request):
             if result.is_success:
                 ultimo_usuario = User.objects.latest('id')
                 print(ultimo_usuario)
-                estado_pago=EstadoPago(usuaria=ultimo_usuario,pago_completado=True)  
-                estado_pago.save()      
-                return render(request,'registro_completado.html',{'estado_pago':estado_pago})        
+                estado_pago=EstadoPago(usuaria=ultimo_usuario,pago_completado=True)
+                estado_pago.save()
+                return render(request,'registro_completado.html',{'estado_pago':estado_pago})
                
             else:
                
@@ -369,7 +344,7 @@ def procesar_pago_social(request):
 
             if result.is_success:
                 ultimo_usuario = User.objects.latest('id')
-                estado_pago=EstadoPago(usuario=ultimo_usuario,pago_completado=True)  
+                estado_pago=EstadoPago(usuario=ultimo_usuario,pago_completado=True)
                 estado_pago.save()      
                 
                 return JsonResponse({"status": "success"})
@@ -399,7 +374,7 @@ def mi_perfil(request):
                 user.save()
                 update_session_auth_hash(request, user)
             messages.success(request, 'Tu perfil ha sido actualizado exitosamente.')
-            return redirect('perfil_actualizado')       
+            return redirect('perfil_actualizado')
     else:
         form = MiPerfilForm(initial={'username': user.username, 'email': user.email,'usuario_id': user.id})
         

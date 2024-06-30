@@ -80,8 +80,7 @@ def archivo(request):
             elif (tipo=='extracciones'):
                 return crear_archivo_extracciones(request,form)
             elif (tipo=='obstetra'):
-                return crear_archivo_obstetra(request,form)
-            
+                return crear_archivo_obstetra(request,form)       
         else:
             print(form.errors)
             return render(request,'error_formato.html',{'form':form})
