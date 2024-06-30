@@ -145,7 +145,6 @@ def gestion_extracciones(request):
     anemia=CitaExtracciones.objects.filter(anemia=True).count()
     analisis_normal=CitaExtracciones.objects.filter(analisis_normal=True).count()
     rh_negativo=CitaExtracciones.objects.filter(rh_negativo=True).count()
-  
     return render(request, 'gestion_extracciones.html',{'o_sullivan_larga_positivo':o_sullivan_larga_positivo,
                                                         'o_sullivan_normal_positivo':o_sullivan_normal_positivo,
                                                         'anemia':anemia,'analisis_normal': analisis_normal,
