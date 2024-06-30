@@ -323,7 +323,7 @@ def braintree_social(request):
                 estado_pago=EstadoPago(usuaria=ultimo_usuario,pago_completado=True)  
                 estado_pago.save()      
                 return render(request,'registro_completado.html',{'estado_pago':estado_pago})        
-               # return redirect('registro_completado')
+               
             else:
                
                     

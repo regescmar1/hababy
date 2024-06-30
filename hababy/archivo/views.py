@@ -70,7 +70,6 @@ def archivo(request):
         form = CitaObstetraForm(request.POST or None)
         cita_existente = CitaObstetra.objects.filter(usuaria=request.user, trimestre=trimestre,orden=orden).first()
 
-        
     if request.method == 'POST':
         print('ispost')
         form = ArchivoForm(request.POST, request.FILES)
@@ -305,7 +304,7 @@ def generar_pdf(request):
     if tipo=='curva_larga':
         archivos=ArchivoCurvaLarga.objects.filter(usuaria=request.user,cita_curva_larga__trimestre=trimestre)
     elif tipo=='obstetra':
-        if(orden is None):
+        if (orden is None):
             archivos=ArchivoObstetra.objects.filter(usuaria=request.user,cita_obstetra__trimestre=trimestre)
         else:
             archivos=ArchivoObstetra.objects.filter(usuaria=request.user,cita_obstetra__trimestre=trimestre,cita_obstetra__orden=orden)
