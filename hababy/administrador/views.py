@@ -90,7 +90,6 @@ def citas(request):
     media=media_citas(request)
     max=max_num_citas(request)
     min=min_num_citas(request)
-    
 
     return render(request, 'citas.html',{'min':min,'max':max,'media':media,'usuarias_dict': usuarias_dict,
                                          'citas_curva_larga': citas_curva_larga,'citas_extracciones':citas_extracciones,
