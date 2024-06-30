@@ -10,9 +10,6 @@ class PerfilUsuariaForm(forms.Form):
     email = forms.EmailField(required=False)
     password = forms.CharField(label='New Password', widget=forms.PasswordInput, required=False)
    
-    
-
-
     def clean_username(self):
         username = self.cleaned_data.get('username')
         usuario_id = self.initial.get('usuario_id')

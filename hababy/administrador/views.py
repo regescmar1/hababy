@@ -41,10 +41,9 @@ def usuaria(request,usuaria_id=None):
                 usuaria.save()
                 update_session_auth_hash(request, usuaria)
             messages.success(request, 'Tu perfil ha sido actualizado exitosamente.')
-            return redirect('perfil_actualizado_admin')       
+            return redirect('perfil_actualizado_admin')
     else:
-        form = PerfilUsuariaForm(initial={'username': usuaria.username, 'email': usuaria.email,'usuario_id': usuaria.id})
-        
+        form = PerfilUsuariaForm(initial={'username': usuaria.username, 'email': usuaria.email,'usuario_id': usuaria.id}) 
     
     return render(request, 'usuaria.html', {'form': form,'usuaria_id':usuaria_id})
 
@@ -56,8 +55,8 @@ def crear_usuaria(request):
             username = form.cleaned_data['username']
             email = form.cleaned_data['email']
             password = form.cleaned_data.get('password')
-            user = User.objects.create_user(username=username, email=email, password=password)
-            return redirect('/administrador/gestion_usuarias/')  
+            User.objects.create_user(username=username, email=email, password=password)
+            return redirect('/administrador/gestion_usuarias/')
     else:
         form = PerfilUsuariaForm()
     return render(request, 'usuaria.html', {'form': form})
@@ -94,7 +93,10 @@ def citas(request):
     min=min_num_citas(request)
     
 
-    return render(request, 'citas.html',{'min':min,'max':max,'media':media,'usuarias_dict': usuarias_dict,'citas_curva_larga': citas_curva_larga,'citas_extracciones':citas_extracciones,'citas_matrona':citas_matrona,'citas_medicina_familia':citas_medicina_familia,'citas_obstetra':citas_obstetra,'citas_odontologia':citas_odontologia,'citas_vacuna':citas_vacuna})
+    return render(request, 'citas.html',{'min':min,'max':max,'media':media,'usuarias_dict': usuarias_dict,
+                                         'citas_curva_larga': citas_curva_larga,'citas_extracciones':citas_extracciones,
+                                         'citas_matrona':citas_matrona,'citas_medicina_familia':citas_medicina_familia,
+                                         'citas_obstetra':citas_obstetra,'citas_odontologia':citas_odontologia,'citas_vacuna':citas_vacuna})
 
 @login_required
 def citas_por_usuaria(request):
@@ -121,7 +123,7 @@ def media_citas(request):
     return media
 
 @login_required
-def max_num_citas(request):    
+def max_num_citas(request):
     usuarias_dict = citas_por_usuaria(request)
     max_citas = 0
     for total_citas in usuarias_dict.values():
@@ -130,9 +132,9 @@ def max_num_citas(request):
     return max_citas
 
 @login_required
-def min_num_citas(request):    
+def min_num_citas(request):
     usuarias_dict = citas_por_usuaria(request)
-    min_citas = float('inf') 
+    min_citas = float('inf')
     for total_citas in usuarias_dict.values():
         if total_citas < min_citas:
             min_citas = total_citas
@@ -146,7 +148,10 @@ def gestion_extracciones(request):
     analisis_normal=CitaExtracciones.objects.filter(analisis_normal=True).count()
     rh_negativo=CitaExtracciones.objects.filter(rh_negativo=True).count()
   
-    return render(request, 'gestion_extracciones.html',{'o_sullivan_larga_positivo':o_sullivan_larga_positivo,'o_sullivan_normal_positivo':o_sullivan_normal_positivo,'anemia':anemia,'analisis_normal': analisis_normal,'rh_negativo':rh_negativo})
+    return render(request, 'gestion_extracciones.html',{'o_sullivan_larga_positivo':o_sullivan_larga_positivo,
+                                                        'o_sullivan_normal_positivo':o_sullivan_normal_positivo,
+                                                        'anemia':anemia,'analisis_normal': analisis_normal,
+                                                        'rh_negativo':rh_negativo})
 
 
 @login_required
