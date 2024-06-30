@@ -14,5 +14,3 @@ class ArchivoForm(forms.Form):
             # Si no se ha subido ningún archivo, no hay errores
             return archivo
         return archivo
-    
-

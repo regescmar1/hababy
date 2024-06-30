@@ -75,7 +75,7 @@ def eliminar_usuaria(request,usuaria_id):
     else:
         form = PerfilUsuariaForm()
         return render(request, 'eliminar_usuaria.html', {'form': form})
-    
+
 @login_required
 def citas(request):
     citas_curva_larga =CurvaLarga.objects.count()
