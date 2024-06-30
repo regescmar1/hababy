@@ -43,8 +43,7 @@ def usuaria(request,usuaria_id=None):
             messages.success(request, 'Tu perfil ha sido actualizado exitosamente.')
             return redirect('perfil_actualizado_admin')
     else:
-        form = PerfilUsuariaForm(initial={'username': usuaria.username, 'email': usuaria.email,'usuario_id': usuaria.id}) 
-    
+        form = PerfilUsuariaForm(initial={'username': usuaria.username, 'email': usuaria.email,'usuario_id': usuaria.id})
     return render(request, 'usuaria.html', {'form': form,'usuaria_id':usuaria_id})
 
 @login_required

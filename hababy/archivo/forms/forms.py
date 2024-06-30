@@ -4,7 +4,6 @@ from django.core.exceptions import ValidationError
 
 class ArchivoForm(forms.Form):
     archivo=forms.ImageField(required=False,max_length=255)
-    
     def clean_archivo(self):
         archivo = self.cleaned_data['archivo']
         if archivo:

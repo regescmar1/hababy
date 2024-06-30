@@ -1,4 +1,4 @@
-from django.shortcuts import render
+
 
 # Create your views here.
 from django.shortcuts import render,redirect
@@ -12,9 +12,8 @@ from django.http import HttpResponse
 from obstetra.models import CitaObstetra
 from reportlab.lib.pagesizes import letter
 from reportlab.platypus import SimpleDocTemplate, Image
-from django.http import HttpResponse
-from .models import ArchivoExtracciones
-from django.http import HttpResponseBadRequest
+
+
 
 from obstetra.forms.forms import CitaObstetraForm
 
@@ -77,7 +76,7 @@ def archivo(request):
         form = ArchivoForm(request.POST, request.FILES)
         print('formulario valido',form.is_valid())
         if form.is_valid():
-            if(tipo=='curva_larga'):
+            if (tipo=='curva_larga'):
                 return crear_archivo_curva_larga(request,form)
             elif(tipo=='extracciones'):
                 return crear_archivo_extracciones(request,form)
@@ -112,7 +111,8 @@ def archivo(request):
 def mostrar_listado_archivo_extracciones(request,trimestre):
     cita_existente = CitaExtracciones.objects.filter(usuaria=request.user, trimestre=trimestre).first()
     archivos_extracciones_existentes = ArchivoExtracciones.objects.filter(usuaria=request.user, cita_extracciones=cita_existente)
-    return render(request, 'archivos_extracciones.html', {'archivos_extracciones_existentes':archivos_extracciones_existentes,'trimestre':trimestre,'cita_existente':cita_existente})
+    return render(request, 'archivos_extracciones.html', {'archivos_extracciones_existentes':archivos_extracciones_existentes,
+                                                          'trimestre':trimestre,'cita_existente':cita_existente})
 
 @login_required
 def mostrar_listado_archivo_obstetra(request,trimestre,orden):
@@ -124,13 +124,15 @@ def mostrar_listado_archivo_obstetra(request,trimestre,orden):
     if cita_existente:
         archivos_obstetra_existentes = ArchivoObstetra.objects.filter(usuaria=request.user, cita_obstetra=cita_existente)
 
-    return render(request, 'archivos_obstetra.html', {'archivos_obstetra_existentes': archivos_obstetra_existentes, 'trimestre': trimestre, 'orden': orden, 'cita_existente': cita_existente})
+    return render(request, 'archivos_obstetra.html', {'archivos_obstetra_existentes': archivos_obstetra_existentes, 
+                                                      'trimestre': trimestre, 'orden': orden, 'cita_existente': cita_existente})
 
 @login_required
 def mostrar_listado_archivo_curva_larga(request,trimestre):
     cita_existente = CurvaLarga.objects.filter(usuaria=request.user, trimestre=trimestre).first()
     archivos_curva_larga_existentes = ArchivoCurvaLarga.objects.filter(usuaria=request.user, cita_curva_larga=cita_existente)
-    return render(request, 'archivos_curva_larga.html', {'archivos_curva_larga_existentes':archivos_curva_larga_existentes,'trimestre':trimestre,'cita_existente':cita_existente})
+    return render(request, 'archivos_curva_larga.html', {'archivos_curva_larga_existentes':archivos_curva_larga_existentes,
+                                                         'trimestre':trimestre,'cita_existente':cita_existente})
 
 
 @login_required
@@ -177,7 +179,7 @@ def crear_archivo_obstetra(request,form):
     url = request.path
     trimestre = determinar_trimestre(url)
     orden=determinar_orden(url)
-    if(orden==None):
+    if (orden==None):
         cita_existente = CitaObstetra.objects.filter(usuaria=request.user, trimestre=trimestre).first()
     else:
         cita_existente = CitaObstetra.objects.filter(usuaria=request.user, trimestre=trimestre,orden=orden).first()
@@ -320,7 +322,7 @@ def generar_pdf(request):
 
 
     for archivo in archivos:
-        imagen_path = archivo.archivo.path  
+        imagen_path = archivo.archivo.path
         img = Image(imagen_path, width=400, height=400)  
         elements.append(img)
 
