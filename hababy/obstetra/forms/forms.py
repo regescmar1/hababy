@@ -1,7 +1,6 @@
 from django import forms
 from django.core.validators import MinValueValidator, MaxValueValidator
 
-
 class CitaObstetraForm(forms.Form):
     fecha = forms.DateTimeField(input_formats=['%Y/%m/%d   %H:%M'],  widget=forms.DateTimeInput(attrs={'type': 'datetime-local'}))
     peso = forms.FloatField(required=False,widget=forms.NumberInput(attrs={'min': 0.0, 'max': 200.0}))
@@ -15,7 +14,6 @@ class CitaObstetraForm(forms.Form):
     #40semanas
     monitores=forms.CharField(widget=forms.Textarea,required=False)
 
-
     def clean_fecha(self):
         fecha = self.cleaned_data['fecha']
         return fecha
@@ -23,7 +21,7 @@ class CitaObstetraForm(forms.Form):
     def clean_peso(self):
         peso = self.cleaned_data['peso']
         return peso
-    
+
     def clean_altura(self):
         altura = self.cleaned_data['altura']
         return altura
@@ -33,9 +31,9 @@ class CitaObstetraForm(forms.Form):
         return tas
 
     def clean_tad(self):
-        tad = self.cleaned_data['tad']  
+        tad = self.cleaned_data['tad']
         return tad
-    
+
     def clean_observaciones(self):
-        observaciones = self.cleaned_data['observaciones']  
+        observaciones = self.cleaned_data['observaciones']
         return observaciones

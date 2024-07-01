@@ -1,6 +1,6 @@
 # Create your tests here.
 import datetime
-from django.test import Client, TestCase
+from django.test import TestCase
 from medicina_familia.models import CitaMedicinaFamilia
 from django.contrib.auth.models import User
 from django.utils import timezone

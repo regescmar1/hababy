@@ -3,7 +3,7 @@ from extracciones.models import CitaExtracciones
 from .forms.forms import CitaMedicinaFamiliaForm
 from medicina_familia.models import CitaMedicinaFamilia
 from django.contrib.auth.decorators import login_required
- 
+
 def determinar_trimestre(url):
     trimestre = None
     if 'citas_primer' in url:
@@ -53,7 +53,6 @@ def hierro(request):
     if cita_extracciones.anemia:
         receta_hierro=True
     form = CitaMedicinaFamiliaForm(request.POST or None)
-    tipo=determinar_tipo(url)
     if request.method == 'POST':
         form = CitaMedicinaFamiliaForm(request.POST or None)
         print('formulario valido',form.is_valid())
@@ -118,10 +117,8 @@ def eliminar_cita_medicina_familia(request):
 def acido_folico(request):
     url = request.path
     trimestre = determinar_trimestre(url)
-    tipo=determinar_tipo(url)
     print(trimestre)
     form = CitaMedicinaFamiliaForm(request.POST or None)
-    cita_existente = CitaMedicinaFamilia.objects.filter(usuaria=request.user, trimestre=trimestre,tipo=tipo).first()
     if request.method == 'POST':
         form = CitaMedicinaFamiliaForm(request.POST or None)
         print('formulario valido',form.is_valid())

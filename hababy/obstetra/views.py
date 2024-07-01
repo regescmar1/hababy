@@ -17,16 +17,13 @@ def determinar_trimestre_y_orden(url):
         orden=1
     elif 'citas_tercer' in url:
         trimestre = 3
-    
     if 'uno' in url:
         orden = 1
     elif 'dos' in url:
         orden = 2
     elif 'tres' in url:
         orden = 3
-
     return trimestre, orden
-
 
 @login_required
 def mostrar_formulario(request):
@@ -51,10 +48,7 @@ def mostrar_formulario(request):
 def obstetra(request):
     url = request.path
     trimestre, orden = determinar_trimestre_y_orden(url)
-    print(trimestre)
-    print(orden)
     form = CitaObstetraForm(request.POST or None)
-    cita_existente = CitaObstetra.objects.filter(usuaria=request.user, trimestre=trimestre, orden=orden).first()
     if request.method == 'POST':
         form = CitaObstetraForm(request.POST or None)
         print('formulario valido',form.is_valid())
@@ -66,14 +60,12 @@ def obstetra(request):
         return mostrar_formulario(request)
     return render(request, 'obstetra.html', {'form': form,'trimestre':trimestre,'orden':orden})
 
-
 @login_required
 def crear_actualizar_cita_obstetra(request,form):
     url = request.path
     trimestre, orden = determinar_trimestre_y_orden(url)
     cita_existente=CitaObstetra.objects.filter(usuaria=request.user,trimestre=trimestre,orden=orden).first()
     if cita_existente:
-        print('0')
         cita_existente.fecha = form.cleaned_data['fecha']
         cita_existente.peso = form.cleaned_data['peso']
         cita_existente.altura = form.cleaned_data['altura']
@@ -83,10 +75,8 @@ def crear_actualizar_cita_obstetra(request,form):
         cita_existente.tad = form.cleaned_data['tad']
         cita_existente.observaciones = form.cleaned_data['observaciones']
         cita_existente.monitores = form.cleaned_data['monitores']
-        cita_existente.save()
-        
-    else:   
-        print('1') 
+        cita_existente.save() 
+    else:
         nueva_cita = CitaObstetra.objects.create(
             fecha=form.cleaned_data['fecha'],
             peso=form.cleaned_data['peso'],
@@ -99,7 +89,6 @@ def crear_actualizar_cita_obstetra(request,form):
             monitores=form.cleaned_data['monitores'],
             usuaria=request.user
         )
-
         if nueva_cita.peso is not None and nueva_cita.peso != 0 and nueva_cita.altura is not None and nueva_cita.altura != 0:
             print("Peso:", nueva_cita.peso)
             print("Altura:", nueva_cita.altura)
@@ -108,11 +97,7 @@ def crear_actualizar_cita_obstetra(request,form):
             nueva_cita.save()
         else:
             print("Peso o altura no válidos:", nueva_cita.peso, nueva_cita.altura)
-        
-    
     return render(request, 'obstetra.html', {'form': form,'trimestre':trimestre,'orden':orden})
-
-
 
 @login_required
 def eliminar_cita_obstetra(request):
@@ -132,4 +117,3 @@ def eliminar_cita_obstetra(request):
         elif trimestre==3:
             return redirect('/gestion_citas/citas_tercer/')
     return render(request, 'eliminar_cita_obstetra.html',{'form':form,'trimestre':trimestre,'orden':orden})
-    
