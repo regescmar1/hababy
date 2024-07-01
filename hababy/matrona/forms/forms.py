@@ -21,7 +21,7 @@ class CitaMatronaForm(forms.Form):
     def clean_peso(self):
         peso = self.cleaned_data['peso']
         return peso
-    
+
     def clean_altura(self):
         altura = self.cleaned_data['altura']
         return altura

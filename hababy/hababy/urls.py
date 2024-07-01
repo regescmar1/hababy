@@ -57,7 +57,7 @@ urlpatterns = [
     path('gestion_citas/citas_primer/extracciones/',include('extracciones.urls')),
     path('gestion_citas/citas_segundo/extracciones/',include('extracciones.urls')),
     path('gestion_citas/citas_tercer/extracciones/',include('extracciones.urls')),
-    
+
     path('gestion_citas/citas_primer/extracciones/archivos/',include('archivo.urls')),
     path('gestion_citas/citas_segundo/extracciones/archivos/',include('archivo.urls')),
     path('gestion_citas/citas_tercer/extracciones/archivos/',include('archivo.urls')),
