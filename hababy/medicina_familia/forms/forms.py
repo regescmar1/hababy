@@ -11,15 +11,15 @@ class CitaMedicinaFamiliaForm(forms.Form):
     def clean_fecha(self):
         fecha = self.cleaned_data['fecha']
         return fecha
-    
+
     def clean_receta_acido_folico(self):
         receta_acido_folico = self.cleaned_data['receta_acido_folico']
         return receta_acido_folico
-    
+
     def clean_receta_hierro(self):
         receta_hierro=self.cleaned_data['receta_hierro']
         return receta_hierro
-    
+
     def clean_observaciones(self):
         observaciones = self.cleaned_data['observaciones']
         return observaciones

@@ -1,10 +1,6 @@
 from django.db import models
-from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator
-
-from extracciones.models import CitaExtracciones
-
 
 # Create your models here.
 class CitaMedicinaFamilia(models.Model):
