@@ -1,6 +1,5 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-
 from extracciones.models import CitaExtracciones
 
 @login_required
@@ -30,4 +29,3 @@ def citas_tercer(request):
     if anemia:
         receta_hierro=True
     return render(request,'citas_tercer.html',{'receta_hierro':receta_hierro})
-    

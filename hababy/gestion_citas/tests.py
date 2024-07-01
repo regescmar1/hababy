@@ -14,7 +14,6 @@ class GestionCitasTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'gestion_citas.html')
 
-
     def test_citas_primer(self):
         user = User.objects.create_user(username='testuser', email='test@example.com', password='password123')
         self.client.force_login(user)
@@ -22,15 +21,12 @@ class GestionCitasTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'citas_primer.html')
 
-
-    
     def test_citas_segundo(self):
         user = User.objects.create_user(username='testuser', email='test@example.com', password='password123')
         self.client.force_login(user)
         response = self.client.get(reverse('citas_segundo'))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'citas_segundo.html')
-
 
     def test_citas_tercer(self):
         user = User.objects.create_user(username='testuser', email='test@example.com', password='password123')

@@ -17,7 +17,6 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 from hababy_app import views as hababy_views
-from autenticacion import views as autenticacion_views
 from django.conf import settings
 from django.conf.urls.static import static
 urlpatterns = [
@@ -29,7 +28,7 @@ urlpatterns = [
     path('politica_privacidad/', hababy_views.politica_privacidad,name="politica_privacidad"),
 
     path('oauth/', include('social_django.urls', namespace='social')),
-    path('autenticacion/', include('autenticacion.urls')), 
+    path('autenticacion/', include('autenticacion.urls')),
 
     path('educacion_maternal/',include('educacion_maternal.urls')),
 
