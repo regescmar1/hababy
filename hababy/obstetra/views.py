@@ -75,7 +75,7 @@ def crear_actualizar_cita_obstetra(request,form):
         cita_existente.tad = form.cleaned_data['tad']
         cita_existente.observaciones = form.cleaned_data['observaciones']
         cita_existente.monitores = form.cleaned_data['monitores']
-        cita_existente.save() 
+        cita_existente.save()
     else:
         nueva_cita = CitaObstetra.objects.create(
             fecha=form.cleaned_data['fecha'],
