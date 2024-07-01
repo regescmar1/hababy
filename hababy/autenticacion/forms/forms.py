@@ -18,7 +18,7 @@ class UsuariaLoginForm(forms.Form):
                 raise forms.ValidationError('Nombre de usuario o contraseña incorrectos.')
 
         return cleaned_data
-    
+
 class RegistroForm(forms.Form):
     username = forms.CharField(max_length=150)
     email = forms.EmailField()

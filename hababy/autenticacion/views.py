@@ -65,10 +65,6 @@ def logout_usuaria(request):
     logout(request)
     return redirect(reverse('principal'))
 
-
-
-
-
 def enviar_correo_confirmacion(destinatario, codigo):
     asunto = 'Código de confirmación de registro'
     mensaje = f'Su código de confirmación es: {codigo}'
@@ -77,21 +73,15 @@ def enviar_correo_confirmacion(destinatario, codigo):
     except Exception as e:
         print('Error al enviar el correo:', e)
 
-
-
-
 def verificar_codigo_para_correo(request):
     if request.method == 'POST':
         codigo_ingresado = request.POST.get('codigo_confirmacion')
         codigo_correcto = request.session.get('codigo_confirmacion')
-
         if codigo_ingresado == codigo_correcto:
             return redirect('braintree')
         else:
             return render(request, 'codigo_error.html')
     return render(request, 'verificar_codigo.html')
-
-
 
 def registro(request):
     if request.method == 'POST':
@@ -107,9 +97,6 @@ def registro(request):
         form = RegistroForm()
     return render(request, 'registro.html', {'form': form})
 
-
-
-
 def braintree_view(request):
     print('000')
     if request.method == 'POST':
@@ -124,7 +111,6 @@ def braintree_view(request):
                     private_key=settings.BRAINTREE_PRIVATE_KEY
                 )
             )
-
             result = gateway.transaction.sale({
                 "amount": "1.99",  
                 "payment_method_nonce": nonce,
@@ -141,16 +127,11 @@ def braintree_view(request):
                     email = registro_data['email']
                     password = registro_data['password']
                     user = User.objects.create_user(username=username, email=email, password=password)
-
-
                     print("3Usuario creado:", user)
                     del request.session['registro_data']
                     return redirect('registro_completado')
             else:
-               
-                    
                 error_message = result.message
-
     else:
         print('0')
         gateway = braintree.BraintreeGateway(
@@ -164,14 +145,11 @@ def braintree_view(request):
         client_token = gateway.client_token.generate()
         return render(request, 'braintree.html', {'braintree_client_token': client_token})
 
-
 def procesar_pago(request):
     if request.method == 'POST':
         body_unicode = request.body.decode('utf-8')
         body_data = json.loads(body_unicode)
-        
         nonce = body_data.get('nonce')
-
         if nonce:
             gateway = braintree.BraintreeGateway(
                 braintree.Configuration(
@@ -181,7 +159,6 @@ def procesar_pago(request):
                     private_key=settings.BRAINTREE_PRIVATE_KEY
                 )
             )
-
             result = gateway.transaction.sale({
                 "amount": "1.99",  
                 "payment_method_nonce": nonce,
@@ -189,7 +166,6 @@ def procesar_pago(request):
                     "submit_for_settlement": True
                 }
             })
-
             if result.is_success:
                 registro_data = request.session.get('registro_data')
                 if registro_data:
@@ -211,7 +187,6 @@ def procesar_pago(request):
     else:
         return JsonResponse({"status": "error", "message": "Método no permitido"}, status=405)
 
-
 def registro_completado(request):
     return render(request, 'registro_completado.html')
 
@@ -224,7 +199,7 @@ def olvido_contrasenia(request):
             request.session['codigo_confirmacion'] = codigo_confirmacion
             enviar_correo_confirmacion(form.cleaned_data['email'], codigo_confirmacion)
             request.session['registro_data']= form.cleaned_data
-            request.session['email_olvido']=form.cleaned_data['email']        
+            request.session['email_olvido']=form.cleaned_data['email']
             return redirect('verificar_codigo_para_contrasenia')
     else:
         form = OlvidoContraseniaForm()
@@ -234,13 +209,10 @@ def verificar_codigo_para_contrasenia(request):
     if request.method == 'POST':
         codigo_ingresado = request.POST.get('codigo_confirmacion')
         codigo_correcto = request.session.get('codigo_confirmacion')
-
         if codigo_ingresado == codigo_correcto:
             return redirect('modificar_contrasenia')
         else:
-           
             return render(request, 'codigo_error.html')
-
     return render(request, 'verificar_codigo.html')
 
 def modificar_contrasenia(request):
@@ -263,11 +235,8 @@ def modificar_contrasenia(request):
             messages.success(request, 'Tu contraseña ha sido actualizada exitosamente.')
             return redirect('/autenticacion/login_usuaria/')
     else:
-      
         form = ModificarContraseniaForm()
-
     return render(request, 'modificar_contrasenia.html',{'form': form})
-
 
 def braintree_social(request):
     print('000')
@@ -283,7 +252,6 @@ def braintree_social(request):
                     private_key=settings.BRAINTREE_PRIVATE_KEY
                 )
             )
-
             result = gateway.transaction.sale({
                 "amount": "1.99",  
                 "payment_method_nonce": nonce,
@@ -298,12 +266,8 @@ def braintree_social(request):
                 estado_pago=EstadoPago(usuaria=ultimo_usuario,pago_completado=True)
                 estado_pago.save()
                 return render(request,'registro_completado.html',{'estado_pago':estado_pago})
-               
-            else:
-               
-                    
+            else: 
                 error_message = result.message
-
     else:
         print('0')
         gateway = braintree.BraintreeGateway(
@@ -316,14 +280,12 @@ def braintree_social(request):
         )
         client_token = gateway.client_token.generate()
         return render(request, 'braintree_social.html', {'braintree_client_token': client_token})
-    
+
 def procesar_pago_social(request):
     if request.method == 'POST':
         body_unicode = request.body.decode('utf-8')
         body_data = json.loads(body_unicode)
-        
         nonce = body_data.get('nonce')
-
         if nonce:
             gateway = braintree.BraintreeGateway(
                 braintree.Configuration(
@@ -333,7 +295,6 @@ def procesar_pago_social(request):
                     private_key=settings.BRAINTREE_PRIVATE_KEY
                 )
             )
-
             result = gateway.transaction.sale({
                 "amount": "1.99",  
                 "payment_method_nonce": nonce,
@@ -341,14 +302,11 @@ def procesar_pago_social(request):
                     "submit_for_settlement": True
                 }
             })
-
             if result.is_success:
                 ultimo_usuario = User.objects.latest('id')
                 estado_pago=EstadoPago(usuario=ultimo_usuario,pago_completado=True)
                 estado_pago.save()      
-                
                 return JsonResponse({"status": "success"})
-
             else:
                 error_message = result.message
                 return JsonResponse({"status": "error", "message": error_message})
@@ -356,7 +314,6 @@ def procesar_pago_social(request):
             return JsonResponse({"status": "error", "message": "Nonce de pago no proporcionado"})
     else:
         return JsonResponse({"status": "error", "message": "Método no permitido"}, status=405)
-
 
 @login_required
 def mi_perfil(request):
@@ -377,15 +334,11 @@ def mi_perfil(request):
             return redirect('perfil_actualizado')
     else:
         form = MiPerfilForm(initial={'username': user.username, 'email': user.email,'usuario_id': user.id})
-        
-    
     return render(request, 'mi_perfil.html', {'form': form})
-
 
 @login_required
 def perfil_actualizado(request):
     return render(request, 'perfil_actualizado.html')
-
 
 @login_required
 def eliminar_mi_perfil(request):
