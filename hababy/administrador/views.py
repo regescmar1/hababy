@@ -88,10 +88,10 @@ def citas(request):
 
     usuarias_dict=citas_por_usuaria(request)
     media=media_citas(request)
-    max=max_num_citas(request)
-    min=min_num_citas(request)
+    max_num=max_num_citas(request)
+    min_num=min_num_citas(request)
 
-    return render(request, 'citas.html',{'min':min,'max':max,'media':media,'usuarias_dict': usuarias_dict,
+    return render(request, 'citas.html',{'min_num':min_num,'max_num':max_num,'media':media,'usuarias_dict': usuarias_dict,
                                          'citas_curva_larga': citas_curva_larga,'citas_extracciones':citas_extracciones,
                                          'citas_matrona':citas_matrona,'citas_medicina_familia':citas_medicina_familia,
                                          'citas_obstetra':citas_obstetra,'citas_odontologia':citas_odontologia,'citas_vacuna':citas_vacuna})
@@ -150,7 +150,6 @@ def gestion_extracciones(request):
                                                         'anemia':anemia,'analisis_normal': analisis_normal,
                                                         'rh_negativo':rh_negativo})
 
-
 @login_required
 def gestion_vacunas(request):
     gripe=CitaVacuna.objects.filter(nombre='gripe').count()
@@ -160,8 +159,7 @@ def gestion_vacunas(request):
 
 @login_required
 def gestion_odontologia(request):
-    num_usuarias=User.objects.all().count()
     limpieza_si=CitaOdontologia.objects.filter(limpieza=True).count()
-    limpieza_no=num_usuarias-limpieza_si
+    limpieza_no=CitaOdontologia.objects.all().count()-limpieza_si
     print('limpieza si',limpieza_si)
     return render(request, 'gestion_odontologia.html',{'limpieza_si':limpieza_si,'limpieza_no':limpieza_no})
