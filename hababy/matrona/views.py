@@ -1,17 +1,9 @@
-from django.shortcuts import render
 from django.shortcuts import render,redirect
 from .forms.forms import CitaMatronaForm
-from django.contrib.auth.models import User
-
-from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from matrona.models import CitaMatrona
-from datetime import datetime
-
 
 # Create your views here.
-
-
 def determinar_trimestre_y_orden(url):
     trimestre = None
     orden = None
@@ -22,15 +14,11 @@ def determinar_trimestre_y_orden(url):
         trimestre = 2
     elif 'citas_tercer' in url:
         trimestre = 3
-
     if 'uno' in url:
         orden = 1
     elif 'dos' in url:
         orden = 2
-
     return trimestre, orden
-
-
 
 @login_required
 def mostrar_formulario(request):
@@ -58,7 +46,6 @@ def matrona(request):
     print(trimestre)
     print(orden)
     form = CitaMatronaForm(request.POST or None)
-    cita_existente = CitaMatrona.objects.filter(usuaria=request.user, trimestre=trimestre, orden=orden).first()
     if request.method == 'POST':
         form = CitaMatronaForm(request.POST or None)
         print('formulario valido',form.is_valid())
@@ -69,7 +56,6 @@ def matrona(request):
     else:
         return mostrar_formulario(request)
     return render(request, 'matrona.html', {'form': form,'trimestre':trimestre,'orden':orden})
-
 
 @login_required
 def eliminar_cita_matrona(request):
@@ -89,7 +75,6 @@ def eliminar_cita_matrona(request):
         elif trimestre==3:
             return redirect('/gestion_citas/citas_tercer/')
     return render(request, 'eliminar_cita_matrona.html',{'form':form,'trimestre':trimestre,'orden':orden})
-    
 
 @login_required
 def crear_actualizar_cita_matrona(request,form):
@@ -97,7 +82,6 @@ def crear_actualizar_cita_matrona(request,form):
     trimestre, orden = determinar_trimestre_y_orden(url)
     cita_existente=CitaMatrona.objects.filter(usuaria=request.user,trimestre=trimestre,orden=orden).first()
     if cita_existente:
-        print('0')
         cita_existente.fecha = form.cleaned_data['fecha']
         cita_existente.peso = form.cleaned_data['peso']
         cita_existente.altura = form.cleaned_data['altura']
@@ -108,9 +92,7 @@ def crear_actualizar_cita_matrona(request,form):
         cita_existente.exploracion_obstetrica = form.cleaned_data['exploracion_obstetrica']
         cita_existente.egb = form.cleaned_data['egb']
         cita_existente.save()
-        
-    else:   
-        print('1') 
+    else:
         nueva_cita = CitaMatrona.objects.create(
             fecha=form.cleaned_data['fecha'],
             peso=form.cleaned_data['peso'],
@@ -128,12 +110,7 @@ def crear_actualizar_cita_matrona(request,form):
             print("Altura:", nueva_cita.altura)
             if nueva_cita.peso and nueva_cita.altura:
                 nueva_cita.imc = nueva_cita.peso / (nueva_cita.altura ** 2)
-            
         else:
             print("Peso o altura no válidos:", nueva_cita.peso, nueva_cita.altura)
-       
         nueva_cita.save()
-   
-    
     return render(request, 'matrona.html', {'form': form,'trimestre':trimestre,'orden':orden})
-
