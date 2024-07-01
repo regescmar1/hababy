@@ -17,7 +17,7 @@ def sesion(request, sesion_id=None):
             if sesion_id:
                 return actualizar_sesion(request, form, sesion_id)
             else:
-                return crear_sesion(request, form)
+                return crear_sesion(request)
         else:
             print(form.errors)
     else:

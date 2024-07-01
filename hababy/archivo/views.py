@@ -280,7 +280,8 @@ def generar_pdf(request):
     elif tipo=='extracciones':
         archivos= ArchivoExtracciones.objects.filter(usuaria=request.user, cita_extracciones__trimestre=trimestre)
     response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = f'attachment; filename="listado_archivos_extracciones.pdf"'
+    filename = "listado_archivos_extracciones.pdf"
+    response['Content-Disposition'] = f'attachment; filename="{filename}"'
     doc = SimpleDocTemplate(response, pagesize=letter)
     elements = []
     for archivo in archivos:

@@ -130,10 +130,7 @@ def braintree_view(request):
                     print("3Usuario creado:", user)
                     del request.session['registro_data']
                     return redirect('registro_completado')
-            else:
-                error_message = result.message
     else:
-        print('0')
         gateway = braintree.BraintreeGateway(
             braintree.Configuration(
                 environment=braintree.Environment.Sandbox,
