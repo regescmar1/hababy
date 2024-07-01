@@ -156,7 +156,7 @@ def crear_archivo_curva_larga(request,form):
     )
     nuevo_archivo.save()
     return redirect('/gestion_citas/citas_segundo/extracciones/test_o_sullivan_curva_larga/archivos/archivo_guardado_con_exito/')
-    
+
 @login_required
 def crear_archivo_obstetra(request,form):
     print(form)

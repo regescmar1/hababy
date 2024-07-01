@@ -266,7 +266,7 @@ def braintree_social(request):
                 estado_pago=EstadoPago(usuaria=ultimo_usuario,pago_completado=True)
                 estado_pago.save()
                 return render(request,'registro_completado.html',{'estado_pago':estado_pago})
-            else: 
+            else:
                 error_message = result.message
     else:
         print('0')
@@ -305,7 +305,7 @@ def procesar_pago_social(request):
             if result.is_success:
                 ultimo_usuario = User.objects.latest('id')
                 estado_pago=EstadoPago(usuario=ultimo_usuario,pago_completado=True)
-                estado_pago.save()      
+                estado_pago.save()
                 return JsonResponse({"status": "success"})
             else:
                 error_message = result.message
