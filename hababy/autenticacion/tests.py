@@ -7,7 +7,6 @@ from django.urls import reverse
 from django.core import mail
 from autenticacion.forms.forms import OlvidoContraseniaForm, RegistroForm
 
-
 class LoginTestCase(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(username='testuser', password='testpassword',email='testuser@testuser.com')
@@ -55,7 +54,7 @@ class VerificarCodigoParaCorreoTestCase(TestCase):
     def setUp(self):
         self.client = Client()
         self.client.session['codigo_confirmacion'] = '123456'
-      
+
     def test_verificar_codigo_para_correo_get(self):
         response = self.client.get(reverse('verificar_codigo_para_correo'))
         self.assertEqual(response.status_code, 200)
