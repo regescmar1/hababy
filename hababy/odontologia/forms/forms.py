@@ -5,7 +5,7 @@ class CitaOdontologiaForm(forms.Form):
     limpieza = forms.BooleanField(required=False)
     observaciones = forms.CharField(widget=forms.Textarea,required=False)
     eliminar_cita_odontologia_id=forms.IntegerField(required=False, widget=forms.HiddenInput())
-    
+
     def clean_fecha(self):
         fecha = self.cleaned_data['fecha']
         return fecha
