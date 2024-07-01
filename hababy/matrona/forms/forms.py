@@ -1,7 +1,6 @@
 from django import forms
 from django.core.validators import MinValueValidator, MaxValueValidator
 
-
 class CitaMatronaForm(forms.Form):
     eliminar_cita_matrona_id=forms.IntegerField(required=False)
     fecha = forms.DateTimeField(input_formats=['%Y/%m/%d   %H:%M'],  widget=forms.DateTimeInput(attrs={'type': 'datetime-local'}))
@@ -14,7 +13,6 @@ class CitaMatronaForm(forms.Form):
     orden = forms.IntegerField(required=False,validators=[MinValueValidator(1), MaxValueValidator(2)])
     exploracion_obstetrica=forms.CharField(widget=forms.Textarea,required=False)
     egb=forms.BooleanField(required=False)
-
 
     def clean_fecha(self):
         fecha = self.cleaned_data['fecha']
@@ -33,9 +31,9 @@ class CitaMatronaForm(forms.Form):
         return tas
 
     def clean_tad(self):
-        tad = self.cleaned_data['tad']  
+        tad = self.cleaned_data['tad']
         return tad
     
     def clean_exploracion_obstetrica(self):
-        exploracion_obstetrica = self.cleaned_data['exploracion_obstetrica']  
+        exploracion_obstetrica = self.cleaned_data['exploracion_obstetrica']
         return exploracion_obstetrica

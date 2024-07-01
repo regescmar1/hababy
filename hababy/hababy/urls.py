@@ -51,7 +51,7 @@ urlpatterns = [
     path('gestion_citas/citas_tercer/obstetra/uno/archivos/',include('archivo.urls')),
     path('gestion_citas/citas_tercer/obstetra/dos/archivos/',include('archivo.urls')),
     path('gestion_citas/citas_tercer/obstetra/tres/archivos/',include('archivo.urls')),
-    
+
     path('vacunas/',include('vacuna.urls')),
 
     path('gestion_citas/citas_primer/extracciones/',include('extracciones.urls')),
