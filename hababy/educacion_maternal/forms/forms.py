@@ -8,7 +8,7 @@ class SesionForm(forms.Form):
     def clean_fecha(self):
         fecha = self.cleaned_data['fecha']
         return fecha
-    
+
     def clean_titulo(self):
         titulo = self.cleaned_data['titulo']
         return titulo
