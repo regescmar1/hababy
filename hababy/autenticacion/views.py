@@ -262,7 +262,7 @@ def braintree_social(request):
                 print(ultimo_usuario)
                 estado_pago=EstadoPago(usuaria=ultimo_usuario,pago_completado=True)
                 estado_pago.save()
-                return render(request,'registro_completado.html',{'estado_pago':estado_pago})  
+                return render(request,'registro_completado.html',{'estado_pago':estado_pago})
     else:
         gateway = braintree.BraintreeGateway(
             braintree.Configuration(
