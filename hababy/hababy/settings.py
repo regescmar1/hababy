@@ -13,7 +13,6 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 from pathlib import Path
 import os
 
-import sys
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -29,7 +28,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-BRAINTREE_PRODUCTION = False  
+BRAINTREE_PRODUCTION = False
 BRAINTREE_MERCHANT_ID = os.environ.get("BRAINTREE_MERCHANT_ID", "")
 BRAINTREE_PUBLIC_KEY = os.environ.get("BRAINTREE_PUBLIC_KEY", "")
 BRAINTREE_PRIVATE_KEY = os.environ.get("BRAINTREE_PRIVATE_KEY", "")
@@ -64,15 +63,8 @@ INSTALLED_APPS = [
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'social_core.backends.facebook.FacebookOAuth2',
-    'social_core.backends.google.GoogleOAuth2',  
-
-     
+    'social_core.backends.google.GoogleOAuth2',      
 ]
-
-
-
-
-
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.office365.com'
@@ -87,11 +79,6 @@ SOCIAL_AUTH_FACEBOOK_SECRET = ''
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = ''
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = ''
-
-
-
-
-
 
 LOGIN_REDIRECT_URL = '/autenticacion/login_completado/'
 LOGOUT_REDIRECT_URL = '/'
@@ -112,7 +99,9 @@ ROOT_URLCONF = 'hababy.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'autenticacion','consejos','educacion_maternal','gestion_citas','odontologia','matrona','obstetra','vacuna','extracciones','archivo','medicina_familia','proxima_cita','administrador','hababy_app','templates'),],
+        'DIRS': [os.path.join(BASE_DIR, 'autenticacion','consejos','educacion_maternal','gestion_citas',
+                              'odontologia','matrona','obstetra','vacuna','extracciones','archivo',
+                              'medicina_familia','proxima_cita','administrador','hababy_app','templates'),],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
