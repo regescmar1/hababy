@@ -69,12 +69,10 @@ def mostrar_formulario(request, sesion_id):
 
 @login_required
 def eliminar_sesion(request,sesion_id):
-    
     form = SesionForm(request.POST or None)
     if request.method == 'POST':
         sesion_existente = get_object_or_404(Sesion, id=sesion_id)
         if sesion_existente:
             sesion_existente.delete()
-
             return redirect('/educacion_maternal/')
     return render(request, 'eliminar_sesion.html',{'form':form})
