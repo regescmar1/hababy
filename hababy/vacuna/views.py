@@ -1,6 +1,5 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
-
 from extracciones.models import CitaExtracciones
 from vacuna.models import CitaVacuna
 from .forms.forms import CitaVacunaForm
@@ -15,7 +14,6 @@ def vacunas(request):
             antid=True
     return render(request, 'vacunas.html', {'antid':antid})
 
-
 def determinar_nombre(url):
     nombre = None
     if 'gripe' in url:
@@ -26,13 +24,11 @@ def determinar_nombre(url):
         nombre = 'antid'
     return nombre
 
-
 @login_required
 def vacuna(request):
     url = request.path
     nombre=determinar_nombre(url)
     form = CitaVacunaForm(request.POST or None)
-    cita_existente = CitaVacuna.objects.filter(usuaria=request.user,nombre=nombre).first()
     if request.method == 'POST':
         form = CitaVacunaForm(request.POST, request.FILES)
         print('formulario valido',form.is_valid())
@@ -43,7 +39,6 @@ def vacuna(request):
     else:
         return mostrar_formulario(request)
     return render(request, 'vacuna.html', {'form': form,'nombre':nombre})
-
 
 @login_required
 def mostrar_formulario(request):
@@ -59,20 +54,17 @@ def mostrar_formulario(request):
     form = CitaVacunaForm(initial=initial_data)
     return render(request, 'vacuna.html', {'form': form,'cita_existente':cita_existente,'nombre':nombre})
 
-
 @login_required
 def crear_actualizar_cita_vacuna(request,form):
     url = request.path
     nombre = determinar_nombre(url)
     cita_existente = CitaVacuna.objects.filter(usuaria=request.user,nombre=nombre).first()
     if cita_existente:
-        print('0')
         cita_existente.fecha = form.cleaned_data['fecha']
         cita_existente.nombre = nombre
         cita_existente.observaciones = form.cleaned_data['observaciones']
         cita_existente.save()
     else:
-        print('1') 
         nueva_cita = CitaVacuna.objects.create(
             fecha=form.cleaned_data['fecha'],
             nombre=nombre,
@@ -81,7 +73,6 @@ def crear_actualizar_cita_vacuna(request,form):
         )
         nueva_cita.save()
     return render(request, 'vacuna.html', {'form': form,'nombre':nombre})
-
 
 @login_required
 def eliminar_cita_vacuna(request):
@@ -93,8 +84,5 @@ def eliminar_cita_vacuna(request):
         cita_existente = CitaVacuna.objects.filter(usuaria=request.user, nombre=nombre).first()
         if cita_existente:
             cita_existente.delete()
-
         return redirect('/vacunas/')
-       
     return render(request, 'eliminar_cita_vacuna.html',{'form':form,'nombre':nombre})
-    
