@@ -8,8 +8,6 @@ from obstetra.models import CitaObstetra
 from odontologia.models import CitaOdontologia
 from vacuna.models import CitaVacuna
 import locale
-from datetime import datetime, time
-from operator import attrgetter
 # Create your views here.
 
 def determinar_tipo(url):
@@ -30,8 +28,6 @@ def determinar_tipo(url):
         tipo = 'vacuna'
     return tipo
 
-
-
 def proxima_cita(request):
     proxima_cita_obj=calcular_proxima_cita(request)
     if proxima_cita_obj is not None:
@@ -49,7 +45,6 @@ def proxima_cita(request):
     else:
         print('No existe proxima cita.')
         return render(request,'no_hay_citas_pendientes.html')
-
 
 def determinar_cadena_trimeste(trimestre):
     cadena_trimestre=None
@@ -71,7 +66,6 @@ def determinar_cadena_orden(orden):
         cadena_orden='tres'
     return cadena_orden
 
-
 def determinar_url_proxima_cita(request,fecha_proxima_cita,especialista):
     url_proxima_cita = None
     cadena_trimestre=None
@@ -82,13 +76,11 @@ def determinar_url_proxima_cita(request,fecha_proxima_cita,especialista):
         cadena_trimestre='citas_segundo'
         especialista='test_o_sullivan_curva_larga'
         url_proxima_cita='/gestion_citas/'+cadena_trimestre+'/extracciones/'+especialista+'/'
-
     elif especialista == 'Extracciones':
         cita=CitaExtracciones.objects.filter(usuaria=request.user,fecha=fecha_proxima_cita).first()
         cadena_trimestre=determinar_cadena_trimeste(cita.trimestre)
         especialista ='extracciones'
         url_proxima_cita='/gestion_citas/'+cadena_trimestre+'/'+especialista+'/'
-
     elif especialista == 'Matrona':
         cita=CitaMatrona.objects.filter(usuaria=request.user,fecha=fecha_proxima_cita).first()
         trimestre=cita.trimestre
@@ -99,16 +91,12 @@ def determinar_url_proxima_cita(request,fecha_proxima_cita,especialista):
             url_proxima_cita='/gestion_citas/'+cadena_trimestre+'/'+especialista+'/'
         else:
             url_proxima_cita='/gestion_citas/'+cadena_trimestre+'/'+especialista+'/'+cadena_orden+'/'
-
     elif especialista == 'MedicinaFamilia':
         cita=CitaMedicinaFamilia.objects.filter(usuaria=request.user,fecha=fecha_proxima_cita).first()
         especialista ='medicina_familia'
         cadena_trimestre=determinar_cadena_trimeste(cita.trimestre)
         receta=cita.tipo
         url_proxima_cita='/gestion_citas/'+cadena_trimestre+'/'+especialista+'/'+receta+'/'
-       
-
-
     elif especialista == 'Obstetra':
         cita=CitaObstetra.objects.filter(usuaria=request.user,fecha=fecha_proxima_cita).first()
         especialista ='obstetra'
@@ -119,14 +107,11 @@ def determinar_url_proxima_cita(request,fecha_proxima_cita,especialista):
             url_proxima_cita='/gestion_citas/'+cadena_trimestre+'/'+especialista+'/'+cadena_orden+'/'
         else:
             url_proxima_cita='/gestion_citas/'+cadena_trimestre+'/'+especialista+'/'
-
     elif especialista == 'Odontologia':
         cita=CitaOdontologia.objects.filter(usuaria=request.user,fecha=fecha_proxima_cita).first()
         especialista ='odontologia'
         cadena_trimestre='citas_primer'
         url_proxima_cita='/gestion_citas/'+cadena_trimestre+'/'+especialista+'/'
-    
-
     elif especialista == 'Vacuna':
         cita=CitaVacuna.objects.filter(usuaria=request.user,fecha=fecha_proxima_cita).first()
         especialista ='vacuna'
@@ -135,14 +120,10 @@ def determinar_url_proxima_cita(request,fecha_proxima_cita,especialista):
             url_proxima_cita='/vacunas/gripe/'
         elif nombre == 'tos_ferina':
             url_proxima_cita='/vacunas/tos_ferina/'
-            
     return url_proxima_cita
-
-
 
 def calcular_proxima_cita(request):
     fecha_actual = timezone.now()
-    tipo = None
     proxima_cita=None
     citas=[]
     citas_curva_larga =CurvaLarga.objects.filter(usuaria=request.user)
@@ -159,10 +140,7 @@ def calcular_proxima_cita(request):
     citas += list(citas_obstetra)
     citas += list(citas_odontologia)
     citas += list(citas_vacuna)
-    
-  
     citas_ordenadas_por_fecha = sorted(citas, key=lambda cita: cita.fecha)
-
     for cita in citas_ordenadas_por_fecha :
         if cita.fecha >= fecha_actual:
             proxima_cita = cita
@@ -172,7 +150,6 @@ def calcular_proxima_cita(request):
     else:
         print("No hay próxima cita")
     return proxima_cita
-
 
 def determinar_especialista(proxima_cita):
     tipo=str(type(proxima_cita))
@@ -192,4 +169,3 @@ def determinar_especialista(proxima_cita):
     elif 'CitaVacuna' in tipo:
         especialista = 'Vacuna'
     return especialista
-
