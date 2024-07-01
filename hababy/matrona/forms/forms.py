@@ -33,7 +33,7 @@ class CitaMatronaForm(forms.Form):
     def clean_tad(self):
         tad = self.cleaned_data['tad']
         return tad
-    
+
     def clean_exploracion_obstetrica(self):
         exploracion_obstetrica = self.cleaned_data['exploracion_obstetrica']
         return exploracion_obstetrica

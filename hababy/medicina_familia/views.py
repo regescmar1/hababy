@@ -1,5 +1,4 @@
 from django.shortcuts import render,redirect
-
 from extracciones.models import CitaExtracciones
 from .forms.forms import CitaMedicinaFamiliaForm
 from medicina_familia.models import CitaMedicinaFamilia
@@ -40,11 +39,9 @@ def mostrar_formulario_hierro(request):
         'receta_hierro': cita_existente.receta_hierro if cita_existente else None,
         'observaciones':cita_existente.observaciones if cita_existente else None,
         'tipo':cita_existente.tipo if cita_existente else None,
-        
     }
     form = CitaMedicinaFamiliaForm(initial=initial_data)
     return render(request, 'medicina_familia_hierro.html', {'form': form,'trimestre':trimestre,'receta_hierro':receta_hierro})
-
 
 @login_required
 def hierro(request):
@@ -57,7 +54,6 @@ def hierro(request):
         receta_hierro=True
     form = CitaMedicinaFamiliaForm(request.POST or None)
     tipo=determinar_tipo(url)
-    cita_existente = CitaMedicinaFamilia.objects.filter(usuaria=request.user, trimestre=trimestre,tipo=tipo).first()
     if request.method == 'POST':
         form = CitaMedicinaFamiliaForm(request.POST or None)
         print('formulario valido',form.is_valid())
@@ -68,7 +64,6 @@ def hierro(request):
     else:
         return mostrar_formulario_hierro(request)
     return render(request, 'medicina_familia_hierro.html', {'form': form,'trimestre':trimestre,'receta_hierro':receta_hierro})
-
 
 @login_required
 def crear_actualizar_cita_medicina_familia_hierro(request,form):
@@ -81,15 +76,12 @@ def crear_actualizar_cita_medicina_familia_hierro(request,form):
     if cita_extracciones.anemia:
         receta_hierro=True
     if cita_existente:
-        print('0')
         cita_existente.fecha = form.cleaned_data['fecha']
         cita_existente.receta_acido_folico = form.cleaned_data['receta_acido_folico']
         cita_existente.receta_hierro = form.cleaned_data['receta_hierro']
         cita_existente.observaciones = form.cleaned_data['observaciones']
         cita_existente.save()
-        
-    else:   
-        print('1') 
+    else:
         nueva_cita = CitaMedicinaFamilia.objects.create(
             fecha=form.cleaned_data['fecha'],
             receta_acido_folico = form.cleaned_data['receta_acido_folico'],
@@ -100,8 +92,6 @@ def crear_actualizar_cita_medicina_familia_hierro(request,form):
             usuaria=request.user,
         )
         nueva_cita.save()
-      
-    
     return render(request, 'medicina_familia_hierro.html', {'form': form,'trimestre':trimestre,'receta_hierro':receta_hierro})
 
 @login_required
@@ -123,7 +113,6 @@ def eliminar_cita_medicina_familia(request):
             return redirect('/gestion_citas/citas_tercer/')
         print('cita_existente',cita_existente)
     return render(request, 'eliminar_cita_medicina_familia.html',{'form':form,'trimestre':trimestre,'tipo':tipo})
-    
 
 @login_required
 def acido_folico(request):
@@ -150,7 +139,6 @@ def mostrar_formulario_acido_folico(request):
     tipo=determinar_tipo(url)
     trimestre = determinar_trimestre(url)
     cita_existente = CitaMedicinaFamilia.objects.filter(usuaria=request.user, trimestre=trimestre,tipo=tipo).first()
-   
     fecha_cita = cita_existente.fecha if cita_existente else None
     initial_data = {
         'fecha': fecha_cita,
@@ -158,7 +146,6 @@ def mostrar_formulario_acido_folico(request):
         'receta_hierro': cita_existente.receta_hierro if cita_existente else None,
         'observaciones':cita_existente.observaciones if cita_existente else None,
         'tipo':cita_existente.tipo if cita_existente else None,
-        
     }
     form = CitaMedicinaFamiliaForm(initial=initial_data)
     return render(request, 'medicina_familia_af.html', {'form': form,'trimestre':trimestre})
@@ -169,17 +156,13 @@ def crear_actualizar_cita_medicina_familia_acido_folico(request,form):
     trimestre = determinar_trimestre(url)
     tipo=determinar_tipo(url)
     cita_existente=CitaMedicinaFamilia.objects.filter(usuaria=request.user,trimestre=trimestre,tipo=tipo).first()
-   
     if cita_existente:
-        print('0')
         cita_existente.fecha = form.cleaned_data['fecha']
         cita_existente.receta_acido_folico = form.cleaned_data['receta_acido_folico']
         cita_existente.receta_hierro = form.cleaned_data['receta_hierro']
         cita_existente.observaciones = form.cleaned_data['observaciones']
         cita_existente.save()
-        
-    else:   
-        print('1') 
+    else:
         nueva_cita = CitaMedicinaFamilia.objects.create(
             fecha=form.cleaned_data['fecha'],
             receta_acido_folico = form.cleaned_data['receta_acido_folico'],
@@ -190,6 +173,4 @@ def crear_actualizar_cita_medicina_familia_acido_folico(request,form):
             usuaria=request.user,
         )
         nueva_cita.save()
-      
-    
     return render(request, 'medicina_familia_af.html', {'form': form,'trimestre':trimestre})
