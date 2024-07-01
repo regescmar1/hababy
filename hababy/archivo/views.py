@@ -80,11 +80,10 @@ def archivo(request):
             elif (tipo=='extracciones'):
                 return crear_archivo_extracciones(request,form)
             elif (tipo=='obstetra'):
-                return crear_archivo_obstetra(request,form)       
+                return crear_archivo_obstetra(request,form)
         else:
             print(form.errors)
             return render(request,'error_formato.html',{'form':form})
-
     else:
         if tipo=='curva_larga':
             return mostrar_listado_archivo_curva_larga(request,trimestre)
@@ -92,15 +91,10 @@ def archivo(request):
             return mostrar_listado_archivo_extracciones(request,trimestre)
         elif tipo=='obstetra':
             return mostrar_listado_archivo_obstetra(request,trimestre,orden)
-        
-        
-
     if (tipo=='curva_larga'):
         return render(request, 'archivos_curva_larga.html', {'form': form,'trimestre':trimestre,'cita_existente':cita_existente})
-        
     elif (tipo=='obstetra'):
         return render(request, 'archivos_obstetra.html', {'form': form,'trimestre':trimestre,'orden':orden,'cita_existente':cita_existente})
-    
     elif (tipo=='extracciones'):
         return render(request, 'archivos_extracciones.html', {'form': form,'trimestre':trimestre,'cita_existente':cita_existente})
 
@@ -132,21 +126,16 @@ def mostrar_listado_archivo_curva_larga(request,trimestre):
     return render(request, 'archivos_curva_larga.html', {'archivos_curva_larga_existentes':archivos_curva_larga_existentes,
                                                          'trimestre':trimestre,'cita_existente':cita_existente})
 
-
 @login_required
 def crear_archivo_extracciones(request,form):
     url = request.path
     trimestre = determinar_trimestre(url)
     cita_existente=CitaExtracciones.objects.filter(usuaria=request.user,trimestre=trimestre).first()
-
-
     nuevo_archivo = ArchivoExtracciones.objects.create(
         archivo=form.cleaned_data['archivo'],
         cita_extracciones=cita_existente,
         usuaria=request.user
     )
-    
-
     nuevo_archivo.save()
     if trimestre == 1:
         return redirect('/gestion_citas/citas_primer/extracciones/archivos/archivo_guardado_con_exito/')
@@ -154,7 +143,6 @@ def crear_archivo_extracciones(request,form):
         return redirect('/gestion_citas/citas_segundo/extracciones/archivos/archivo_guardado_con_exito/')
     elif trimestre == 3:
         return redirect('/gestion_citas/citas_tercer/extracciones/archivos/archivo_guardado_con_exito/')
-
 
 @login_required
 def crear_archivo_curva_larga(request,form):
@@ -167,10 +155,8 @@ def crear_archivo_curva_larga(request,form):
         usuaria=request.user
     )
     nuevo_archivo.save()
-    
     return redirect('/gestion_citas/citas_segundo/extracciones/test_o_sullivan_curva_larga/archivos/archivo_guardado_con_exito/')
     
-
 @login_required
 def crear_archivo_obstetra(request,form):
     print(form)
@@ -181,7 +167,6 @@ def crear_archivo_obstetra(request,form):
         cita_existente = CitaObstetra.objects.filter(usuaria=request.user, trimestre=trimestre).first()
     else:
         cita_existente = CitaObstetra.objects.filter(usuaria=request.user, trimestre=trimestre,orden=orden).first()
-
     nuevo_archivo = ArchivoObstetra.objects.create(
         archivo=form.cleaned_data['archivo'],
         cita_obstetra=cita_existente,
@@ -198,8 +183,6 @@ def crear_archivo_obstetra(request,form):
         return redirect('/gestion_citas/citas_tercer/obstetra/dos/archivos/archivo_guardado_con_exito/')
     elif trimestre == 3 and orden == 3:
         return redirect('/gestion_citas/citas_tercer/obstetra/tres/archivos/archivo_guardado_con_exito/')
-   
-
 
 @login_required
 def archivo_guardado_con_exito(request):
@@ -219,9 +202,7 @@ def ver_archivo(request, archivo_id):
         archivo = get_object_or_404(ArchivoExtracciones, pk=archivo_id)
     elif tipo == 'obstetra':
         archivo = get_object_or_404(ArchivoObstetra, pk=archivo_id)
-    
     return render(request, 'ver_archivo.html', {'archivo': archivo})
-
 
 @login_required
 def descargar_archivo(request,archivo_id):
@@ -233,19 +214,13 @@ def descargar_archivo(request,archivo_id):
         archivo = get_object_or_404(ArchivoExtracciones, pk=archivo_id)
     elif tipo == 'obstetra':
         archivo = get_object_or_404(ArchivoObstetra, pk=archivo_id)
-    
-    
     ruta_archivo = archivo.archivo.path
     print(ruta_archivo)
     try:
-
         with open(ruta_archivo, 'rb') as f:
             contenido = f.read()
-    
         return HttpResponse(contenido, content_type='application/octet-stream')
-    
     except FileNotFoundError:
-    
         return HttpResponse("El archivo no se encontró", status=404)
 
 @login_required
@@ -261,7 +236,6 @@ def eliminar_archivo(request, archivo_id):
         archivo = get_object_or_404(ArchivoExtracciones, pk=archivo_id)
     elif tipo == 'obstetra':
         archivo = get_object_or_404(ArchivoObstetra, pk=archivo_id)
-    
     archivo.delete()
     if tipo=='curva_larga':
         return redirect('/gestion_citas/citas_segundo/extracciones/test_o_sullivan_curva_larga/archivos/archivo_eliminado/')
@@ -281,9 +255,6 @@ def eliminar_archivo(request, archivo_id):
         return redirect('/gestion_citas/citas_tercer/obstetra/dos/archivos/archivo_eliminado/')
     elif trimestre==3 and orden==3 and tipo=='obstetra':
         return redirect('/gestion_citas/citas_tercer/obstetra/tres/archivos/archivo_eliminado/')
-    
-    
-
 
 @login_required
 def archivo_eliminado(request):
@@ -292,7 +263,6 @@ def archivo_eliminado(request):
     tipo=determinar_tipo(url)
     orden=determinar_orden(url)
     return render(request, 'archivo_eliminado.html',{'trimestre':trimestre,'orden':orden,'tipo':tipo})
-
 
 @login_required
 def generar_pdf(request):
@@ -309,22 +279,13 @@ def generar_pdf(request):
             archivos=ArchivoObstetra.objects.filter(usuaria=request.user,cita_obstetra__trimestre=trimestre,cita_obstetra__orden=orden)
     elif tipo=='extracciones':
         archivos= ArchivoExtracciones.objects.filter(usuaria=request.user, cita_extracciones__trimestre=trimestre)
-
-
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = f'attachment; filename="listado_archivos_extracciones.pdf"'
     doc = SimpleDocTemplate(response, pagesize=letter)
-
-
     elements = []
-
-
     for archivo in archivos:
         imagen_path = archivo.archivo.path
         img = Image(imagen_path, width=400, height=400)
         elements.append(img)
-
-
     doc.build(elements)
-
     return response

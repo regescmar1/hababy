@@ -32,7 +32,7 @@ class LoginTestCase(TestCase):
         response = self.client.get(reverse('logout_usuaria'))
         self.assertFalse(response.wsgi_request.user.is_authenticated)
         self.assertRedirects(response, reverse('principal'))
-    
+
 class OlvidoContraseniaTestCase(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(username='testuser', password='testpassword',email='testuser@testuser.com')

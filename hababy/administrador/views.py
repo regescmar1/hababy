@@ -156,7 +156,6 @@ def gestion_vacunas(request):
     gripe=CitaVacuna.objects.filter(nombre='gripe').count()
     antid=CitaVacuna.objects.filter(nombre='antid').count()
     tos_ferina=CitaVacuna.objects.filter(nombre='tos_ferina').count()
-  
     return render(request, 'gestion_vacunas.html',{'gripe':gripe,'antid':antid,'tos_ferina':tos_ferina})
 
 @login_required
